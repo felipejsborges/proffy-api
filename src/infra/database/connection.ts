@@ -1,6 +1,6 @@
-import path from 'path';
+import knex from 'knex';
 
-module.exports = {
+const db = knex({
 	client: 'pg',
 	connection: {
 		host: '172.17.0.2',
@@ -9,8 +9,7 @@ module.exports = {
 		password: 'proffypass',
 		database: 'proffydb',
 	},
-	migrations: {
-		directory: path.resolve(__dirname, 'src', 'database', 'migrations'),
-	},
 	useNullAsDefault: true,
-};
+});
+
+export default db;
