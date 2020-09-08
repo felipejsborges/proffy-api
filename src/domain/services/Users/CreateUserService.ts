@@ -1,5 +1,5 @@
-import UsersRepository from '../../../infra/repositories/knex/UsersRepository';
 import User from '../../models/User';
+import iUsersRepository from '../../repositories/iUsersRepository';
 
 interface Request {
 	name: string;
@@ -8,16 +8,16 @@ interface Request {
 	bio: string;
 }
 
-const usersRepository = new UsersRepository();
-
 export default class CreateUserService {
+	constructor(private usersRepository: iUsersRepository) {}
+
 	public async execute({
 		name,
 		avatar,
 		whatsapp,
 		bio,
 	}: Request): Promise<User> {
-		const user = await usersRepository.create({
+		const user = await this.usersRepository.create({
 			name,
 			avatar,
 			whatsapp,

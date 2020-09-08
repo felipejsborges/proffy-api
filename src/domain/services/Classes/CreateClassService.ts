@@ -1,5 +1,5 @@
-import ClassesRepository from '../../../infra/repositories/knex/ClassesRepository';
 import Class from '../../models/Class';
+import iClassesRepository from '../../repositories/iClassesRepository';
 
 interface Request {
 	user_id: number;
@@ -12,16 +12,16 @@ interface Request {
 	}[];
 }
 
-const classesRepository = new ClassesRepository();
-
 export default class CreateClassService {
+	constructor(private classesRepository: iClassesRepository) {}
+
 	public async execute({
 		user_id,
 		subject,
 		cost,
 		schedule,
 	}: Request): Promise<Class> {
-		const createdClass = await classesRepository.create({
+		const createdClass = await this.classesRepository.create({
 			user_id,
 			subject,
 			cost,

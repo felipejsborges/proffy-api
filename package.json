@@ -4,9 +4,10 @@
 	"main": "index.js",
 	"license": "MIT",
 	"scripts": {
-		"start": "tsnd --transpile-only --ignore-watch node_modules --respawn src/server.ts",
+		"start": "tsnd --transpile-only --ignore-watch node_modules --respawn src/infra/http/server.ts",
 		"knex:migrate": "knex --knexfile knexfile.ts migrate:latest",
-		"knex:migrate:rollback": "knex --knexfile knexfile.ts migrate:rollback"
+		"knex:migrate:rollback": "knex --knexfile knexfile.ts migrate:rollback",
+		"test": "jest"
 	},
 	"devDependencies": {
 		"@types/cors": "^2.8.7",
@@ -18,6 +19,7 @@
 		"eslint-config-airbnb-base": "^14.2.0",
 		"eslint-config-prettier": "^6.11.0",
 		"eslint-plugin-prettier": "^3.1.4",
+		"jest": "^26.4.2",
 		"prettier": "2.1.1",
 		"prettier-eslint": "^11.0.0",
 		"ts-node-dev": "^1.0.0-pre.56",

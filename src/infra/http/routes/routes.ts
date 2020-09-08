@@ -1,9 +1,11 @@
 import express from 'express';
+
+import UsersController from '../controllers/UsersController';
 import ClassesController from '../controllers/ClassesController';
 import ConnectionsController from '../controllers/ConnectionsController';
-import UsersController from '../controllers/UsersController';
 
 const routes = express.Router();
+
 const usersController = new UsersController();
 const classesController = new ClassesController();
 const connectionsController = new ConnectionsController();

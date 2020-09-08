@@ -1,10 +1,10 @@
-import db from '../../database/connection';
-import convertHourToMinutes from '../../../api/utils/convertHourToMinute';
+import db from '../connection';
 import iClassesRepository, {
 	listClassesDTO,
 	createClassDTO,
-} from '../../../api/repositories/interfaces/iClassesRepository';
-import Class from '../../../api/models/Class';
+} from '../../../domain/repositories/iClassesRepository';
+import Class from '../../../domain/models/Class';
+import convertHourToMinutes from '../../../utils/convertHourToMinute';
 
 interface ScheduleItem {
 	week_day: number;

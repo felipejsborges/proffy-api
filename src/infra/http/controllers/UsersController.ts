@@ -1,20 +1,24 @@
 import { Request, Response } from 'express';
 
-import ListUsersService from '../services/Users/ListUsersService';
-import CreateUserService from '../services/Users/CreateUserService';
-import ShowUserService from '../services/Users/ShowUserService';
+import UsersRepository from '../../knex/repositories/UsersRepository';
+
+import ListUsersService from '../../../domain/services/Users/ListUsersService';
+import CreateUserService from '../../../domain/services/Users/CreateUserService';
+import ShowUserService from '../../../domain/services/Users/ShowUserService';
+
+const usersRepository = new UsersRepository();
 
 export default class UsersController {
 	async index(request: Request, response: Response): Promise<Response> {
-		const listUsers = new ListUsersService();
+		const listUsers = new ListUsersService(usersRepository);
 
 		const users = await listUsers.execute();
 
-		return response.json(users);
+		return response.status(200).json(users);
 	}
 
 	async create(request: Request, response: Response): Promise<Response> {
-		const createUser = new CreateUserService();
+		const createUser = new CreateUserService(usersRepository);
 
 		const { name, avatar, whatsapp, bio } = request.body;
 
@@ -29,12 +33,12 @@ export default class UsersController {
 	}
 
 	async show(request: Request, response: Response): Promise<Response> {
-		const showUser = new ShowUserService();
+		const showUser = new ShowUserService(usersRepository);
 
 		const { user_id } = request.params;
 
 		const user = await showUser.execute(Number(user_id));
 
-		return response.json(user);
+		return response.status(200).json(user);
 	}
 }

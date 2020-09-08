@@ -1,4 +1,4 @@
-import Class from '../../models/Class';
+import Class from '../models/Class';
 
 export interface createClassDTO {
 	user_id: number;

@@ -1,7 +1,7 @@
-import db from '../../database/connection';
+import db from '../connection';
 import iConnectionsRepository, {
 	createConnectionDTO,
-} from '../../../api/repositories/interfaces/iConnectionsRepository';
+} from '../../../domain/repositories/iConnectionsRepository';
 
 export default class ConnectionsRepository implements iConnectionsRepository {
 	async index(): Promise<number> {

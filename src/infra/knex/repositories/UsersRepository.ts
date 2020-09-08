@@ -1,8 +1,8 @@
-import db from '../../database/connection';
+import db from '../connection';
 import iUsersRepository, {
 	createUserDTO,
-} from '../../../api/repositories/interfaces/iUsersRepository';
-import User from '../../../api/models/User';
+} from '../../../domain/repositories/iUsersRepository';
+import User from '../../../domain/models/User';
 
 export default class UsersRepository implements iUsersRepository {
 	async index(): Promise<User[]> {
