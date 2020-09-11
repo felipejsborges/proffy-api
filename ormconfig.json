@@ -1,0 +1,15 @@
+{
+	"type": "postgres",
+	"host": "172.17.0.2",
+	"port": 5432,
+	"username": "proffyuser",
+	"password": "proffypass",
+	"database": "proffydb",
+	"entities": ["./src/infra/typeorm/entities/*.ts"],
+	"migrations": [
+		"./src/infra/typeorm/migrations/*.ts"
+	],
+	"cli": {
+		"migrationsDir": "./src/infra/typeorm/migrations"
+	}
+}

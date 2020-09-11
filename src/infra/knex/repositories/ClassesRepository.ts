@@ -64,7 +64,7 @@ export default class ClassesRepository implements iClassesRepository {
 		await trx.commit();
 
 		return {
-			class: insertedClass[0],
+			...insertedClass[0],
 			schedule: insertedClassSchedule,
 		};
 	}

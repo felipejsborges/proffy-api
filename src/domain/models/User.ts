@@ -1,7 +1,28 @@
-export default interface User {
-	id: number;
+import { uuid } from 'uuidv4';
+
+export default class User {
+	id: string;
 	name: string;
-	avatar: string;
-	whatsapp: string;
-	bio: string;
+	email: string;
+	password: string;
+	avatar?: string;
+	whatsapp?: string;
+	bio?: string;
+
+	constructor({
+		name,
+		email,
+		password,
+		avatar,
+		whatsapp,
+		bio,
+	}: Omit<User, 'id'>) {
+		this.id = uuid();
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.avatar = avatar;
+		this.whatsapp = whatsapp;
+		this.bio = bio;
+	}
 }

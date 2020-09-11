@@ -10,7 +10,7 @@ module.exports = {
 		database: 'proffydb',
 	},
 	migrations: {
-		directory: path.resolve(__dirname, 'src', 'database', 'migrations'),
+		directory: path.resolve(__dirname, 'src', 'infra', 'knex', 'migrations'),
 	},
 	useNullAsDefault: true,
 };
