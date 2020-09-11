@@ -1,14 +1,9 @@
 import Class from '../models/Class';
 
 export interface createClassDTO {
-	user_id: number;
+	user_id: string;
 	subject: string;
 	cost: number;
-	schedule: {
-		week_day: number;
-		from: string;
-		to: string;
-	}[];
 }
 
 export interface listClassesDTO {

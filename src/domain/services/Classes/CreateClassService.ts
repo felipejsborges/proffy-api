@@ -5,27 +5,16 @@ interface Request {
 	user_id: number;
 	subject: string;
 	cost: number;
-	schedule: {
-		week_day: number;
-		from: string;
-		to: string;
-	}[];
 }
 
 export default class CreateClassService {
 	constructor(private classesRepository: iClassesRepository) {}
 
-	public async execute({
-		user_id,
-		subject,
-		cost,
-		schedule,
-	}: Request): Promise<Class> {
+	public async execute({ user_id, subject, cost }: Request): Promise<Class> {
 		const createdClass = await this.classesRepository.create({
 			user_id,
 			subject,
 			cost,
-			schedule,
 		});
 
 		return createdClass;

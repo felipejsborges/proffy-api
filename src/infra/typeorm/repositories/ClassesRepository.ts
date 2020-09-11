@@ -8,6 +8,7 @@ import iClassesRepository, {
 import Class from '../../../domain/models/Class';
 
 import convertHourToMinutes from '../../../utils/convertHourToMinute';
+import { uuid } from 'uuidv4';
 
 interface ScheduleItem {
 	week_day: number;
@@ -46,12 +47,14 @@ export class ClassesRepository implements iClassesRepository {
 		// 	.andWhere('class_schedule.to', '>', timeInMinutes);
 	}
 
-	async create({
-		user_id,
-		subject,
-		cost,
-		schedule,
-	}: createClassDTO): Promise<Class> {
+	async create({ user_id, subject, cost }: createClassDTO): Promise<Class> {
+		const classItem = new ClassTypeORM();
+		classItem.subject = subject;
+		classItem.cost = cost;
+		classItem.user_id = user_id;
+
+		return this.ormRepository.save(classItem);
+
 		// const trx = await db.transaction();
 		// const insertedClass = await trx('classes')
 		// 	.insert({

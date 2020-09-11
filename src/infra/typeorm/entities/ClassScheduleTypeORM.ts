@@ -26,7 +26,10 @@ export default class ClassScheduleTypeORM implements ClassSchedule {
 	@Column()
 	class_id: string;
 
-	@ManyToOne(() => ClassTypeORM, classItem => classItem.class_schedule)
+	@ManyToOne(() => ClassTypeORM, classItem => classItem.classes_schedules, {
+		onDelete: 'SET NULL',
+		onUpdate: 'CASCADE',
+	})
 	@JoinColumn({ name: 'class_id', referencedColumnName: 'id' })
 	class: ClassTypeORM;
 }

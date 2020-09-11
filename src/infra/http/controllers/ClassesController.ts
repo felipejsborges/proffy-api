@@ -24,13 +24,12 @@ export default class ClassesController {
 	async create(request: Request, response: Response): Promise<Response> {
 		const createClass = new CreateClassService(classesRepository);
 
-		const { user_id, subject, cost, schedule } = request.body;
+		const { user_id, subject, cost } = request.body;
 
 		const createdClass = await createClass.execute({
 			user_id,
 			subject,
 			cost,
-			schedule,
 		});
 
 		return response.status(201).send(createdClass);

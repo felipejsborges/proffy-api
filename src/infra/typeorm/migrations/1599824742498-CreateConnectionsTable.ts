@@ -5,11 +5,11 @@ import {
 	TableForeignKey,
 } from 'typeorm';
 
-export class CreateClassesTable1599691508468 implements MigrationInterface {
+export class CreateConnectionsTable1599824742498 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.createTable(
 			new Table({
-				name: 'classes',
+				name: 'connections',
 				columns: [
 					{
 						name: 'id',
@@ -19,18 +19,6 @@ export class CreateClassesTable1599691508468 implements MigrationInterface {
 						default: `uuid_generate_v4()`,
 					},
 					{
-						name: 'subject',
-						type: 'varchar',
-						isNullable: false,
-					},
-					{
-						name: 'cost',
-						type: 'decimal',
-						precision: 5,
-						scale: 2,
-						isNullable: false,
-					},
-					{
 						name: 'user_id',
 						type: 'varchar',
 						isNullable: false,
@@ -38,11 +26,10 @@ export class CreateClassesTable1599691508468 implements MigrationInterface {
 				],
 			}),
 		);
-
 		await queryRunner.createForeignKey(
-			'classes',
+			'connections',
 			new TableForeignKey({
-				name: 'userInClassFK',
+				name: 'userInConnectionsFK',
 				columnNames: ['user_id'],
 				referencedColumnNames: ['id'],
 				referencedTableName: 'users',
@@ -53,7 +40,7 @@ export class CreateClassesTable1599691508468 implements MigrationInterface {
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.dropForeignKey('classes', 'userInClassFK');
-		await queryRunner.dropTable('classes');
+		await queryRunner.dropForeignKey('connections', 'userInConnectionsFK');
+		await queryRunner.dropTable('connections');
 	}
 }

@@ -1,4 +1,9 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import {
+	MigrationInterface,
+	QueryRunner,
+	Table,
+	TableForeignKey,
+} from 'typeorm';
 
 export class CreateClassesSchedulesTable1599692119303
 	implements MigrationInterface {
@@ -37,9 +42,24 @@ export class CreateClassesSchedulesTable1599692119303
 				],
 			}),
 		);
+		await queryRunner.createForeignKey(
+			'classes_schedules',
+			new TableForeignKey({
+				name: 'classInClassesScheduleFK',
+				columnNames: ['class_id'],
+				referencedColumnNames: ['id'],
+				referencedTableName: 'classes',
+				onDelete: 'SET NULL',
+				onUpdate: 'CASCADE',
+			}),
+		);
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
+		await queryRunner.dropForeignKey(
+			'classes_schedules',
+			'classInClassesScheduleFK',
+		);
 		await queryRunner.dropTable('classes_schedules');
 	}
 }

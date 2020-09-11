@@ -1,3 +1,16 @@
+import { getRepository, Repository } from 'typeorm';
+import iConnectionsRepository from '../../../domain/repositories/iConnectionsRepository';
+import ConnectionTypeORM from '../entities/ConnectionTypeORM';
+
+export class ConnectionsRepository implements iConnectionsRepository {
+	constructor(private ormRepository: Repository<ConnectionTypeORM>) {
+		ormRepository = getRepository(ConnectionTypeORM);
+	}
+
+	async index(): Promise<number> {
+		return this.ormRepository.findAndCount();
+	}
+}
 // import iConnectionsRepository, {
 // 	createConnectionDTO,
 // } from '../../../domain/repositories/iConnectionsRepository';

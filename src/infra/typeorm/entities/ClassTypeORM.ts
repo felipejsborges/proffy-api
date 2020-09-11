@@ -33,10 +33,12 @@ export default class ClassTypeORM implements Class {
 
 	@OneToMany(
 		() => ClassScheduleTypeORM,
-		class_schedule => class_schedule.class,
+		classes_schedules => classes_schedules.class,
 		{
 			eager: true,
+			onDelete: 'SET NULL',
+			onUpdate: 'CASCADE',
 		},
 	)
-	class_schedule: ClassScheduleTypeORM[];
+	classes_schedules?: ClassScheduleTypeORM[];
 }
