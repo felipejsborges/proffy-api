@@ -1,8 +1,10 @@
+import Connection from '../models/Connection';
+
 export interface createConnectionDTO {
-	user_id: number;
+	user_id: string;
 }
 
 export default interface iConnectionsRepository {
-	create(data: createConnectionDTO): Promise<void>;
-	index(): Promise<number>;
+	create(data: createConnectionDTO): Promise<Connection>;
+	countTotal(): Promise<number>;
 }

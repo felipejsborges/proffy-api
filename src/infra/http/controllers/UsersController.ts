@@ -1,15 +1,14 @@
 import { Request, Response } from 'express';
 
-import UsersRepository from '../../knex/repositories/UsersRepository';
-
 import ListUsersService from '../../../domain/services/Users/ListUsersService';
 import CreateUserService from '../../../domain/services/Users/CreateUserService';
 import ShowUserService from '../../../domain/services/Users/ShowUserService';
 
-const usersRepository = new UsersRepository();
+import UsersRepository from '../../../infra/typeorm/repositories/UsersRepository';
 
-export default class UsersController {
-	async index(request: Request, response: Response): Promise<Response> {
+class UsersController {
+	public async index(request: Request, response: Response): Promise<Response> {
+		const usersRepository = new UsersRepository();
 		const listUsers = new ListUsersService(usersRepository);
 
 		const users = await listUsers.execute();
@@ -17,13 +16,16 @@ export default class UsersController {
 		return response.status(200).json(users);
 	}
 
-	async create(request: Request, response: Response): Promise<Response> {
+	public async create(request: Request, response: Response): Promise<Response> {
+		const usersRepository = new UsersRepository();
 		const createUser = new CreateUserService(usersRepository);
 
-		const { name, avatar, whatsapp, bio } = request.body;
+		const { name, email, password, avatar, whatsapp, bio } = request.body;
 
 		const user = await createUser.execute({
 			name,
+			email,
+			password,
 			avatar,
 			whatsapp,
 			bio,
@@ -32,13 +34,16 @@ export default class UsersController {
 		return response.status(201).send(user);
 	}
 
-	async show(request: Request, response: Response): Promise<Response> {
+	public async show(request: Request, response: Response): Promise<Response> {
+		const usersRepository = new UsersRepository();
 		const showUser = new ShowUserService(usersRepository);
 
 		const { user_id } = request.params;
 
-		const user = await showUser.execute(Number(user_id));
+		const user = await showUser.execute({ user_id });
 
 		return response.status(200).json(user);
 	}
 }
+
+export default UsersController;

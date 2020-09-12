@@ -1,6 +1,6 @@
 import { uuid } from 'uuidv4';
 
-export default class ClassSchedule {
+class ClassSchedule {
 	id: string;
 	week_day: number;
 	from: number;
@@ -15,3 +15,5 @@ export default class ClassSchedule {
 		this.class_id = class_id;
 	}
 }
+
+export default ClassSchedule;

@@ -12,7 +12,7 @@ import ClassScheduleTypeORM from './ClassScheduleTypeORM';
 import Class from '../../../domain/models/Class';
 
 @Entity('classes')
-export default class ClassTypeORM implements Class {
+class ClassTypeORM implements Class {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
@@ -42,3 +42,5 @@ export default class ClassTypeORM implements Class {
 	)
 	classes_schedules?: ClassScheduleTypeORM[];
 }
+
+export default ClassTypeORM;

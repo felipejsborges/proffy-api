@@ -1,11 +1,13 @@
 import iConnectionsRepository from '../../repositories/iConnectionsRepository';
 
-export default class CreateClassService {
+class TotalConnectionsService {
 	constructor(private connectionsRepository: iConnectionsRepository) {}
 
 	public async execute(): Promise<number> {
-		const totalConnections = this.connectionsRepository.index();
+		const totalConnections = await this.connectionsRepository.countTotal();
 
 		return totalConnections;
 	}
 }
+
+export default TotalConnectionsService;

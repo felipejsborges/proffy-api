@@ -2,19 +2,22 @@ import { getRepository, Repository } from 'typeorm';
 import UserTypeORM from '../entities/UserTypeORM';
 import iUsersRepository, {
 	createUserDTO,
+	findOneUserDTO,
 } from '../../../domain/repositories/iUsersRepository';
 import User from '../../../domain/models/User';
 
-export class UsersRepository implements iUsersRepository {
-	constructor(private ormRepository: Repository<UserTypeORM>) {
-		ormRepository = getRepository(UserTypeORM);
+class UsersRepository implements iUsersRepository {
+	private ormRepository: Repository<UserTypeORM>;
+
+	constructor() {
+		this.ormRepository = getRepository(UserTypeORM);
 	}
 
-	async index(): Promise<User[]> {
+	public async findAll(): Promise<User[]> {
 		return await this.ormRepository.find();
 	}
 
-	async create({
+	public async create({
 		name,
 		email,
 		password,
@@ -33,9 +36,11 @@ export class UsersRepository implements iUsersRepository {
 		return await this.ormRepository.save(user);
 	}
 
-	async findById(user_id: number): Promise<User> {
+	public async findOneById({ user_id }: findOneUserDTO): Promise<User> {
 		const user = await this.ormRepository.findByIds([user_id]);
 
 		return user[0];
 	}
 }
+
+export default UsersRepository;

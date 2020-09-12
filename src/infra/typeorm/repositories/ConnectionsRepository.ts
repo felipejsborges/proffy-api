@@ -1,40 +1,29 @@
 import { getRepository, Repository } from 'typeorm';
-import iConnectionsRepository from '../../../domain/repositories/iConnectionsRepository';
+import Connection from '../../../domain/models/Connection';
+import iConnectionsRepository, {
+	createConnectionDTO,
+} from '../../../domain/repositories/iConnectionsRepository';
 import ConnectionTypeORM from '../entities/ConnectionTypeORM';
 
-export class ConnectionsRepository implements iConnectionsRepository {
-	constructor(private ormRepository: Repository<ConnectionTypeORM>) {
-		ormRepository = getRepository(ConnectionTypeORM);
+class ConnectionsRepository implements iConnectionsRepository {
+	private ormRepository: Repository<ConnectionTypeORM>;
+
+	constructor() {
+		this.ormRepository = getRepository(ConnectionTypeORM);
 	}
 
-	async index(): Promise<number> {
-		return this.ormRepository.findAndCount();
+	public async countTotal(): Promise<number> {
+		const response = await this.ormRepository.findAndCount();
+
+		return response[1];
+	}
+
+	public async create({ user_id }: createConnectionDTO): Promise<Connection> {
+		const connection = new ConnectionTypeORM();
+		connection.user_id = user_id;
+
+		return await this.ormRepository.save(connection);
 	}
 }
-// import iConnectionsRepository, {
-// 	createConnectionDTO,
-// } from '../../../domain/repositories/iConnectionsRepository';
-// import { Repository } from 'typeorm';
-// import UserTypeORM from '../entities/';
 
-// export default class ConnectionsRepository implements iConnectionsRepository {
-// 	constructor(private ormRepository: Repository<UserTypeORM>) {
-// 		ormRepository = getRepository(UserTypeORM);
-// 	}
-
-// 	async index(): Promise<number> {
-// 		const totalConnections = await db('connections').count('* as total');
-
-// 		const { total } = totalConnections[0];
-
-// 		return Number(total);
-// 	}
-
-// 	async create({ user_id }: createConnectionDTO): Promise<void> {
-// 		await db('connections').insert({
-// 			user_id,
-// 		});
-
-// 		return;
-// 	}
-// }
+export default ConnectionsRepository;

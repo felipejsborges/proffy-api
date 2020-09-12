@@ -3,27 +3,33 @@ import iUsersRepository from '../../repositories/iUsersRepository';
 
 interface Request {
 	name: string;
-	avatar: string;
-	whatsapp: string;
-	bio: string;
+	email: string;
+	password: string;
+	avatar?: string;
+	whatsapp?: string;
+	bio?: string;
 }
 
-export default class CreateUserService {
+class CreateUserService {
 	constructor(private usersRepository: iUsersRepository) {}
 
 	public async execute({
 		name,
+		email,
+		password,
 		avatar,
 		whatsapp,
 		bio,
 	}: Request): Promise<User> {
-		const user = await this.usersRepository.create({
+		return await this.usersRepository.create({
 			name,
+			email,
+			password,
 			avatar,
 			whatsapp,
 			bio,
 		});
-
-		return user;
 	}
 }
+
+export default CreateUserService;

@@ -2,12 +2,12 @@ import Class from '../../models/Class';
 import iClassesRepository from '../../repositories/iClassesRepository';
 
 interface Request {
-	user_id: number;
+	user_id: string;
 	subject: string;
 	cost: number;
 }
 
-export default class CreateClassService {
+class CreateClassService {
 	constructor(private classesRepository: iClassesRepository) {}
 
 	public async execute({ user_id, subject, cost }: Request): Promise<Class> {
@@ -20,3 +20,5 @@ export default class CreateClassService {
 		return createdClass;
 	}
 }
+
+export default CreateClassService;

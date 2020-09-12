@@ -1,14 +1,13 @@
 import { Request, Response } from 'express';
 
-import ConnectionsRepository from '../../knex/repositories/ConnectionsRepository';
-
 import TotalConnectionsService from '../../../domain/services/Connections/TotalConnectionsService';
 import CreateConnectionService from '../../../domain/services/Connections/CreateConnectionService';
 
-const connectionsRepository = new ConnectionsRepository();
+import ConnectionsRepository from '../../../infra/typeorm/repositories/ConnectionsRepository';
 
-export default class ClassesController {
-	async index(request: Request, response: Response): Promise<Response> {
+class ConnectionsController {
+	public async index(request: Request, response: Response): Promise<Response> {
+		const connectionsRepository = new ConnectionsRepository();
 		const totalConnections = new TotalConnectionsService(connectionsRepository);
 
 		const total = await totalConnections.execute();
@@ -16,13 +15,16 @@ export default class ClassesController {
 		return response.status(200).json(total);
 	}
 
-	async create(request: Request, response: Response): Promise<Response> {
+	public async create(request: Request, response: Response): Promise<Response> {
+		const connectionsRepository = new ConnectionsRepository();
 		const createConnection = new CreateConnectionService(connectionsRepository);
 
 		const { user_id } = request.body;
 
-		await createConnection.execute(user_id);
+		await createConnection.execute({ user_id });
 
 		return response.status(201).send();
 	}
 }
+
+export default ConnectionsController;

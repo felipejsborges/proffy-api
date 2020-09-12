@@ -4,7 +4,7 @@ import ClassTypeORM from './ClassTypeORM';
 import User from '../../../domain/models/User';
 
 @Entity('users')
-export default class UserTypeORM implements User {
+class UserTypeORM implements User {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
@@ -29,3 +29,5 @@ export default class UserTypeORM implements User {
 	@OneToMany(() => ClassTypeORM, classItem => classItem.user)
 	class: ClassTypeORM;
 }
+
+export default UserTypeORM;

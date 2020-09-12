@@ -10,7 +10,7 @@ import ClassTypeORM from './ClassTypeORM';
 import ClassSchedule from '../../../domain/models/ClassSchedule';
 
 @Entity('classes_schedules')
-export default class ClassScheduleTypeORM implements ClassSchedule {
+class ClassScheduleTypeORM implements ClassSchedule {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
@@ -33,3 +33,5 @@ export default class ClassScheduleTypeORM implements ClassSchedule {
 	@JoinColumn({ name: 'class_id', referencedColumnName: 'id' })
 	class: ClassTypeORM;
 }
+
+export default ClassScheduleTypeORM;

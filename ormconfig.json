@@ -5,11 +5,13 @@
 	"username": "proffyuser",
 	"password": "proffypass",
 	"database": "proffydb",
-	"entities": ["./src/infra/typeorm/entities/*.ts"],
+	"entities": [
+		"./src/**/typeorm/entities/*.ts"
+	],
 	"migrations": [
-		"./src/infra/typeorm/migrations/*.ts"
+		"./src/**/typeorm/migrations/*.ts"
 	],
 	"cli": {
-		"migrationsDir": "./src/infra/typeorm/migrations"
+		"migrationsDir": "./src/**/typeorm/migrations"
 	}
 }

@@ -3,12 +3,12 @@ import Class from '../../models/Class';
 import iClassesRepository from '../../repositories/iClassesRepository';
 
 interface Request {
-	week_day: string | null;
-	subject: string | null;
-	time: string | null;
+	week_day: number;
+	subject: string;
+	time: string;
 }
 
-export default class CreateClassService {
+class ListClassesService {
 	constructor(private classesRepository: iClassesRepository) {}
 
 	public async execute({ week_day, subject, time }: Request): Promise<Class[]> {
@@ -18,7 +18,7 @@ export default class CreateClassService {
 
 		const timeInMinutes = convertHourToMinutes(time);
 
-		const classes = this.classesRepository.index({
+		const classes = await this.classesRepository.findAll({
 			week_day,
 			subject,
 			timeInMinutes,
@@ -27,3 +27,5 @@ export default class CreateClassService {
 		return classes;
 	}
 }
+
+export default ListClassesService;

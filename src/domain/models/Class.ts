@@ -1,6 +1,6 @@
 import { uuid } from 'uuidv4';
 
-export default class Class {
+class Class {
 	id: string;
 	subject: string;
 	cost: number;
@@ -13,3 +13,5 @@ export default class Class {
 		this.user_id = user_id;
 	}
 }
+
+export default Class;

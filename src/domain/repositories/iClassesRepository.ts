@@ -6,13 +6,18 @@ export interface createClassDTO {
 	cost: number;
 }
 
-export interface listClassesDTO {
-	week_day: string;
+export interface findClassesDTO {
+	week_day: number;
 	subject: string;
 	timeInMinutes: number;
 }
 
+export interface findOneClassDTO {
+	class_id: string;
+}
+
 export default interface iClassesRepository {
 	create(data: createClassDTO): Promise<Class>;
-	index(data: listClassesDTO): Promise<Class[]>;
+	findAll(data: findClassesDTO): Promise<Class[]>;
+	findOneById(data: findOneClassDTO): Promise<Class>;
 }

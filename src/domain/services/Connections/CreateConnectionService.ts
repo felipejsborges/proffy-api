@@ -1,11 +1,18 @@
+import Connection from '../../models/Connection';
 import iConnectionsRepository from '../../repositories/iConnectionsRepository';
 
-export default class CreateConnectionService {
+interface Request {
+	user_id: string;
+}
+
+class CreateConnectionService {
 	constructor(private connectionsRepository: iConnectionsRepository) {}
 
-	public async execute(user_id: number): Promise<void> {
+	public async execute({ user_id }: Request): Promise<Connection> {
 		return await this.connectionsRepository.create({
 			user_id,
 		});
 	}
 }
+
+export default CreateConnectionService;

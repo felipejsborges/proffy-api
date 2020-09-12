@@ -1,6 +1,6 @@
 import { uuid } from 'uuidv4';
 
-export default class User {
+class User {
 	id: string;
 	name: string;
 	email: string;
@@ -26,3 +26,5 @@ export default class User {
 		this.bio = bio;
 	}
 }
+
+export default User;

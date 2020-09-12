@@ -9,8 +9,12 @@ export interface createUserDTO {
 	bio?: string;
 }
 
+export interface findOneUserDTO {
+	user_id: string;
+}
+
 export default interface iUsersRepository {
 	create(data: createUserDTO): Promise<User>;
-	index(): Promise<User[]>;
-	findById(data: number): Promise<User>;
+	findAll(): Promise<User[]>;
+	findOneById(data: findOneUserDTO): Promise<User>;
 }
