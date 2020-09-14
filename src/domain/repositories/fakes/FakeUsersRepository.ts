@@ -1,7 +1,7 @@
 import iUsersRepository, {
 	createUserDTO,
 	findOneUserByEmailDTO,
-	findOneUserDTO,
+	findOneUserByIdDTO,
 } from '../../../domain/repositories/iUsersRepository';
 import User from '../../../domain/models/User';
 
@@ -29,7 +29,7 @@ class UsersRepository implements iUsersRepository {
 
 	public async findOneById({
 		user_id,
-	}: findOneUserDTO): Promise<User | undefined> {
+	}: findOneUserByIdDTO): Promise<User | undefined> {
 		const user = this.users.find(user => user.id === user_id);
 
 		return user;
