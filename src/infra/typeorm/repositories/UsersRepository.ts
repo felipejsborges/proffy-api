@@ -2,7 +2,8 @@ import { getRepository, Repository } from 'typeorm';
 import UserTypeORM from '../entities/UserTypeORM';
 import iUsersRepository, {
 	createUserDTO,
-	findOneUserDTO,
+	findOneUserByEmailDTO,
+	findOneUserByIdDTO,
 } from '../../../domain/repositories/iUsersRepository';
 import User from '../../../domain/models/User';
 
@@ -36,10 +37,20 @@ class UsersRepository implements iUsersRepository {
 		return await this.ormRepository.save(user);
 	}
 
-	public async findOneById({ user_id }: findOneUserDTO): Promise<User> {
+	public async findOneById({
+		user_id,
+	}: findOneUserByIdDTO): Promise<User | undefined> {
 		const user = await this.ormRepository.findByIds([user_id]);
 
 		return user[0];
+	}
+
+	public async findOneByEmail({
+		email,
+	}: findOneUserByEmailDTO): Promise<User | undefined> {
+		const user = await this.ormRepository.findOne({ where: { email } });
+
+		return user;
 	}
 }
 

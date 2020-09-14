@@ -1,7 +1,7 @@
 import { getRepository, Repository } from 'typeorm';
+import ClassSchedule from '../../../domain/models/ClassSchedule';
 import iClassesSchedulesRepository, {
 	createClassSchedulesDTO,
-	scheduleItem,
 } from '../../../domain/repositories/iClassesSchedulesRepository';
 import ClassScheduleTypeORM from '../entities/ClassScheduleTypeORM';
 
@@ -14,7 +14,7 @@ class ClassesSchedulesRepository implements iClassesSchedulesRepository {
 
 	public async create({
 		classSchedules,
-	}: createClassSchedulesDTO): Promise<ClassScheduleTypeORM[]> {
+	}: createClassSchedulesDTO): Promise<ClassSchedule[]> {
 		return await this.ormRepository.save(classSchedules);
 	}
 }

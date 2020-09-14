@@ -1,3 +1,4 @@
+import { hash } from 'bcryptjs';
 import User from '../../models/User';
 import iUsersRepository from '../../repositories/iUsersRepository';
 
@@ -24,7 +25,7 @@ class CreateUserService {
 		return await this.usersRepository.create({
 			name,
 			email,
-			password,
+			password: await hash(password, 8),
 			avatar,
 			whatsapp,
 			bio,

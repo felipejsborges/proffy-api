@@ -19,5 +19,5 @@ export interface findOneClassDTO {
 export default interface iClassesRepository {
 	create(data: createClassDTO): Promise<Class>;
 	findAll(data: findClassesDTO): Promise<Class[]>;
-	findOneById(data: findOneClassDTO): Promise<Class>;
+	findOneById(data: findOneClassDTO): Promise<Class | undefined>;
 }

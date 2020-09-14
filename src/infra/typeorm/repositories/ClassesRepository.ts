@@ -1,10 +1,4 @@
-import {
-	getRepository,
-	Repository,
-	LessThanOrEqual,
-	MoreThan,
-	WhereExpression,
-} from 'typeorm';
+import { getRepository, Repository, WhereExpression } from 'typeorm';
 
 import ClassTypeORM from '../entities/ClassTypeORM';
 import iClassesRepository, {
@@ -31,24 +25,24 @@ class ClassesRepository implements iClassesRepository {
 				alias: 'classes',
 				innerJoin: { classes_schedules: 'classes.classes_schedules' },
 			},
-			// relations: ['classes_schedules'],
 			where: (qb: WhereExpression) => {
 				qb.where({
 					subject,
-				}).andWhere('classes_schedules.week_day = :week_day', { week_day });
+				})
+					.andWhere('classes_schedules.week_day = :week_day', { week_day })
+					.andWhere('classes_schedules.from <= :from', {
+						from: timeInMinutes,
+					})
+					.andWhere('classes_schedules.to > :to', {
+						to: timeInMinutes,
+					});
 			},
-			// where: {
-			// 	subject,
-			// 	classes_schedules: {
-			// 		week_day,
-			// 		from: LessThanOrEqual(timeInMinutes),
-			// 		to: MoreThan(timeInMinutes),
-			// 	},
-			// },
 		});
 	}
 
-	public async findOneById({ class_id }: findOneClassDTO): Promise<Class> {
+	public async findOneById({
+		class_id,
+	}: findOneClassDTO): Promise<Class | undefined> {
 		const classItem = await this.ormRepository.findByIds([class_id]);
 
 		return classItem[0];
