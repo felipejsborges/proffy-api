@@ -1,8 +1,8 @@
 import faker from 'faker';
 
-import ShowUserService from '../../../domain/services/Users/ShowUserService';
-import FakeUsersRepository from '../../../domain/repositories/fakes/FakeUsersRepository';
-import User from '../../../domain/models/User';
+import ShowUserService from '../../../src/domain/services/Users/ShowUserService';
+import FakeUsersRepository from '../../../src/domain/repositories/fakes/FakeUsersRepository';
+import User from '../../../src/domain/models/User';
 
 describe('ShowUser', () => {
 	let fakeUsersRepository: FakeUsersRepository;

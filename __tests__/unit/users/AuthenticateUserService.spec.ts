@@ -1,11 +1,11 @@
 import faker from 'faker';
 
-import AuthenticateUserService from '../../../domain/services/Users/AuthenticateUserService';
+import AuthenticateUserService from '../../../src/domain/services/Users/AuthenticateUserService';
 
-import FakeUsersRepository from '../../../domain/repositories/fakes/FakeUsersRepository';
+import FakeUsersRepository from '../../../src/domain/repositories/fakes/FakeUsersRepository';
 
-import FakeJWTProvider from '../../../domain/providers/fakes/FakeJWTProvider';
-import FakeHashProvider from '../../../domain/providers/fakes/FakeHashProvider';
+import FakeJWTProvider from '../../../src/domain/providers/fakes/FakeJWTProvider';
+import FakeHashProvider from '../../../src/domain/providers/fakes/FakeHashProvider';
 
 describe('AuthenticateUser', () => {
 	let fakeUsersRepository: FakeUsersRepository;

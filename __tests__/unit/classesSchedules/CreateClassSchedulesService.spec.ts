@@ -1,7 +1,7 @@
 import faker from 'faker';
 
-import CreateClassSchedulesService from '../../../domain/services/ClassesSchedules/CreateClassSchedulesService';
-import FakeClassesSchedulesRepository from '../../../domain/repositories/fakes/FakeClassesSchedulesRepository';
+import CreateClassSchedulesService from '../../../src/domain/services/ClassesSchedules/CreateClassSchedulesService';
+import FakeClassesSchedulesRepository from '../../../src/domain/repositories/fakes/FakeClassesSchedulesRepository';
 
 describe('CreateClassSchedule', () => {
 	let fakeClassesSchedulesRepository: FakeClassesSchedulesRepository;

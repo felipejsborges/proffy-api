@@ -1,7 +1,7 @@
 import faker from 'faker';
 
-import TotalConnectionsService from '../../../domain/services/Connections/TotalConnectionsService';
-import FakeConnectionsRepository from '../../../domain/repositories/fakes/FakeConnectionsRepository';
+import TotalConnectionsService from '../../../src/domain/services/Connections/TotalConnectionsService';
+import FakeConnectionsRepository from '../../../src/domain/repositories/fakes/FakeConnectionsRepository';
 
 describe('Connection', () => {
 	let fakeConnectionsRepository: FakeConnectionsRepository;

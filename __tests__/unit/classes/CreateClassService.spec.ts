@@ -1,8 +1,8 @@
 import faker from 'faker';
 
-import CreateClassService from '../../../domain/services/Classes/CreateClassService';
-import FakeClassesRepository from '../../../domain/repositories/fakes/FakeClassesRepository';
-import Class from '../../../domain/models/Class';
+import CreateClassService from '../../../src/domain/services/Classes/CreateClassService';
+import FakeClassesRepository from '../../../src/domain/repositories/fakes/FakeClassesRepository';
+import Class from '../../../src/domain/models/Class';
 
 describe('CreateClass', () => {
 	let fakeClassesRepository: FakeClassesRepository;

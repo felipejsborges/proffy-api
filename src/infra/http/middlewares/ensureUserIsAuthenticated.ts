@@ -9,6 +9,7 @@ export default function ensureUserIsAuthenticated(
 	const authHeader = request.headers.authorization;
 
 	if (!authHeader) {
+		response.statusCode = 401;
 		throw new Error('Missing token');
 	}
 
@@ -20,13 +21,13 @@ export default function ensureUserIsAuthenticated(
 
 		const payload = jwtProvider.getPayload({ token });
 
-		// request.user.id = payload.user_id;
 		request.user = {
 			id: payload.user_id,
 		};
 
 		return next();
 	} catch {
+		response.statusCode = 401;
 		throw new Error('Invalid token');
 	}
 }
