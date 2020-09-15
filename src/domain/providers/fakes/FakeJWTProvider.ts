@@ -1,7 +1,7 @@
 import authConfig from '../../../config/auth';
 import iJWTProvider, { Payload, Token } from '../iJWTProvider';
 
-class JWTProvider implements iJWTProvider {
+class FakeJWTProvider implements iJWTProvider {
 	private secret = authConfig.jwt.secret;
 	private expiresIn = authConfig.jwt.expiresIn;
 
@@ -15,6 +15,7 @@ class JWTProvider implements iJWTProvider {
 			'.' +
 			'tokenSignatureSimulator: ' +
 			this.secret;
+
 		return { token };
 	}
 
@@ -31,4 +32,4 @@ class JWTProvider implements iJWTProvider {
 	}
 }
 
-export default JWTProvider;
+export default FakeJWTProvider;

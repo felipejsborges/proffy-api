@@ -13,6 +13,10 @@ class ShowClassService {
 			class_id,
 		});
 
+		if (!classItem) {
+			throw new Error('This class does not exist');
+		}
+
 		return classItem;
 	}
 }

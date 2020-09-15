@@ -1,6 +1,6 @@
 import iHashProvider, { PasswordToHash } from '../iHashProvider';
 
-class BCryptHashProvider implements iHashProvider {
+class FakeHashProvider implements iHashProvider {
 	public async generateHash({ password }: PasswordToHash): Promise<string> {
 		return password;
 	}
@@ -13,4 +13,4 @@ class BCryptHashProvider implements iHashProvider {
 	}
 }
 
-export default BCryptHashProvider;
+export default FakeHashProvider;

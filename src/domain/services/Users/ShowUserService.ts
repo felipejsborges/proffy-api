@@ -8,7 +8,7 @@ interface Request {
 class ShowUserService {
 	constructor(private usersRepository: iUsersRepository) {}
 
-	public async execute({ user_id }: Request): Promise<User | undefined> {
+	public async execute({ user_id }: Request): Promise<User> {
 		const user = await this.usersRepository.findOneById({ user_id });
 
 		if (!user) {

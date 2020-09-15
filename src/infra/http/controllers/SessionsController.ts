@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import AuthenticateUserService from '../../../domain/services/Authentication/AuthenticateUserService';
+import AuthenticateUserService from '../../../domain/services/Users/AuthenticateUserService';
 import UsersRepository from '../../../infra/typeorm/repositories/UsersRepository';
 import BCryptHashProvider from '../../providers/BCryptHashProvider';
 import JWTProvider from '../../providers/JWTProvider';

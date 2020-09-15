@@ -13,7 +13,7 @@ interface Response {
 	user: User;
 }
 
-class CreateUserService {
+class AuthenticateUserService {
 	constructor(
 		private usersRepository: iUsersRepository,
 		private jwtProvider: iJWTProvider,
@@ -42,4 +42,4 @@ class CreateUserService {
 	}
 }
 
-export default CreateUserService;
+export default AuthenticateUserService;
