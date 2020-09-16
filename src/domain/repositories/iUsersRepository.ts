@@ -9,6 +9,16 @@ export interface createUserDTO {
 	bio?: string;
 }
 
+export interface updateUserDTO {
+	user_id: string;
+	name: string;
+	email: string;
+	new_password?: string;
+	avatar?: string;
+	whatsapp?: string;
+	bio?: string;
+}
+
 export interface findOneUserByIdDTO {
 	user_id: string;
 }
@@ -22,4 +32,5 @@ export default interface iUsersRepository {
 	findAll(): Promise<User[]>;
 	findOneById(data: findOneUserByIdDTO): Promise<User | undefined>;
 	findOneByEmail(data: findOneUserByEmailDTO): Promise<User | undefined>;
+	update(data: updateUserDTO): Promise<User>;
 }

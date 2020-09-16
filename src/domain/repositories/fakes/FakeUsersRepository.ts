@@ -2,6 +2,7 @@ import iUsersRepository, {
 	createUserDTO,
 	findOneUserByEmailDTO,
 	findOneUserByIdDTO,
+	updateUserDTO,
 } from '../../../domain/repositories/iUsersRepository';
 import User from '../../../domain/models/User';
 
@@ -41,6 +42,38 @@ class UsersRepository implements iUsersRepository {
 		const user = this.users.find((user: User) => user.email === email);
 
 		return user;
+	}
+
+	public async update({
+		user_id,
+		name,
+		email,
+		new_password,
+		avatar,
+		whatsapp,
+		bio,
+	}: updateUserDTO): Promise<User> {
+		const index = this.users.findIndex(user => user.id === user_id);
+
+		let updatedUser = {
+			...this.users[index],
+			name,
+			email,
+			avatar,
+			whatsapp,
+			bio,
+		};
+
+		if (new_password) {
+			updatedUser = {
+				...updatedUser,
+				password: new_password,
+			};
+		}
+
+		this.users[index] = updatedUser;
+
+		return updatedUser;
 	}
 }
 

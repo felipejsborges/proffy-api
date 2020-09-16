@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 import ListUsersService from '../../../domain/services/Users/ListUsersService';
 import CreateUserService from '../../../domain/services/Users/CreateUserService';
+import UpdateUserService from '../../../domain/services/Users/UpdateUserService';
 import ShowUserService from '../../../domain/services/Users/ShowUserService';
 
 import UsersRepository from '../../../infra/typeorm/repositories/UsersRepository';
@@ -32,6 +33,38 @@ class UsersController {
 		});
 
 		return response.status(201).send(user);
+	}
+
+	public async update(request: Request, response: Response): Promise<Response> {
+		const usersRepository = new UsersRepository();
+		const updateUser = new UpdateUserService(usersRepository);
+
+		const {
+			name,
+			email,
+			old_password,
+			new_password,
+			password_confirmation,
+			avatar,
+			whatsapp,
+			bio,
+		} = request.body;
+
+		const user_id = request.user.id;
+
+		const user = await updateUser.execute({
+			user_id,
+			name,
+			old_password,
+			new_password,
+			password_confirmation,
+			email,
+			avatar,
+			whatsapp,
+			bio,
+		});
+
+		return response.status(200).send(user);
 	}
 
 	public async show(request: Request, response: Response): Promise<Response> {

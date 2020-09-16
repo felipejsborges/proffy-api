@@ -4,6 +4,7 @@ import iUsersRepository, {
 	createUserDTO,
 	findOneUserByEmailDTO,
 	findOneUserByIdDTO,
+	updateUserDTO,
 } from '../../../domain/repositories/iUsersRepository';
 import User from '../../../domain/models/User';
 
@@ -51,6 +52,36 @@ class UsersRepository implements iUsersRepository {
 		const user = await this.ormRepository.findOne({ where: { email } });
 
 		return user;
+	}
+
+	public async update({
+		user_id,
+		name,
+		email,
+		new_password,
+		avatar,
+		whatsapp,
+		bio,
+	}: updateUserDTO): Promise<User> {
+		const user = await this.ormRepository.findOne(user_id);
+
+		if (!user) {
+			throw new Error('User does not found');
+		}
+
+		user.name = name;
+		user.email = email;
+		user.avatar = avatar;
+		user.whatsapp = whatsapp;
+		user.bio = bio;
+
+		if (new_password) {
+			user.password = new_password;
+		}
+
+		const updatedUser = await this.ormRepository.save(user);
+
+		return updatedUser;
 	}
 }
 
