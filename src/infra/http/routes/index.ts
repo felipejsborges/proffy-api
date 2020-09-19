@@ -1,14 +1,16 @@
 import express from 'express';
 
-import usersRoutes from './usersRoutes';
-import sessionRoutes from './sessionRoutes';
-import classesRoutes from './classesRoutes';
-import classesSchedulesRoutes from './classesSchedulesRoutes';
-import connectionsRoutes from './connectionsRoutes';
+import usersRoutes from './users.routes';
+import avatarRoutes from './avatar.routes';
+import sessionRoutes from './sessions.routes';
+import classesRoutes from './classes.routes';
+import classesSchedulesRoutes from './classesSchedules.routes';
+import connectionsRoutes from './connections.routes';
 
 const routes = express.Router();
 
 routes.use(usersRoutes);
+routes.use(avatarRoutes);
 routes.use(sessionRoutes);
 routes.use(classesRoutes);
 routes.use(classesSchedulesRoutes);

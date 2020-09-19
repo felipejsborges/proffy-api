@@ -55,25 +55,20 @@ class UsersRepository implements iUsersRepository {
 	}: updateUserDTO): Promise<User> {
 		const index = this.users.findIndex(user => user.id === user_id);
 
-		let updatedUser = {
-			...this.users[index],
-			name,
-			email,
-			avatar,
-			whatsapp,
-			bio,
-		};
-
-		if (new_password) {
-			updatedUser = {
-				...updatedUser,
-				password: new_password,
-			};
+		if (index < 0) {
+			throw new Error('User does not found');
 		}
 
-		this.users[index] = updatedUser;
+		name && (this.users[index].name = name);
+		email && (this.users[index].email = email);
+		avatar && (this.users[index].avatar = avatar);
+		whatsapp && (this.users[index].whatsapp = whatsapp);
+		bio && (this.users[index].bio = bio);
+		new_password && (this.users[index].password = new_password);
 
-		return updatedUser;
+		const userUpdated = this.users[index];
+
+		return userUpdated;
 	}
 }
 

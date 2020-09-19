@@ -69,15 +69,12 @@ class UsersRepository implements iUsersRepository {
 			throw new Error('User does not found');
 		}
 
-		user.name = name;
-		user.email = email;
-		user.avatar = avatar;
-		user.whatsapp = whatsapp;
-		user.bio = bio;
-
-		if (new_password) {
-			user.password = new_password;
-		}
+		name && (user.name = name);
+		email && (user.email = email);
+		avatar && (user.avatar = avatar);
+		whatsapp && (user.whatsapp = whatsapp);
+		bio && (user.bio = bio);
+		new_password && (user.password = new_password);
 
 		const updatedUser = await this.ormRepository.save(user);
 

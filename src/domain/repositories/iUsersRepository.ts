@@ -11,8 +11,8 @@ export interface createUserDTO {
 
 export interface updateUserDTO {
 	user_id: string;
-	name: string;
-	email: string;
+	name?: string;
+	email?: string;
 	new_password?: string;
 	avatar?: string;
 	whatsapp?: string;
