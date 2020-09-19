@@ -6,6 +6,7 @@ import FakeUsersRepository from '../../../src/domain/repositories/fakes/FakeUser
 
 import FakeJWTProvider from '../../../src/domain/providers/fakes/FakeJWTProvider';
 import FakeHashProvider from '../../../src/domain/providers/fakes/FakeHashProvider';
+import AppError from '../../../src/errors/AppError';
 
 describe('AuthenticateUser', () => {
 	let fakeUsersRepository: FakeUsersRepository;
@@ -47,7 +48,7 @@ describe('AuthenticateUser', () => {
 
 		await expect(
 			authenticateUser.execute({ email, password }),
-		).rejects.toBeInstanceOf(Error);
+		).rejects.toBeInstanceOf(AppError);
 	});
 
 	it('should not be able to authenticate with a wrong password', async () => {
@@ -59,6 +60,6 @@ describe('AuthenticateUser', () => {
 
 		await expect(
 			authenticateUser.execute({ email, password: 'wrong-pass' }),
-		).rejects.toBeInstanceOf(Error);
+		).rejects.toBeInstanceOf(AppError);
 	});
 });

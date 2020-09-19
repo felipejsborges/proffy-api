@@ -1,4 +1,5 @@
 import authConfig from '../../../config/auth';
+import AppError from '../../../errors/AppError';
 import iJWTProvider, { Payload, Token } from '../iJWTProvider';
 
 class FakeJWTProvider implements iJWTProvider {
@@ -27,7 +28,7 @@ class FakeJWTProvider implements iJWTProvider {
 
 			return payload;
 		} else {
-			throw new Error('Invalid token');
+			throw new AppError('Invalid token', 401);
 		}
 	}
 }

@@ -5,6 +5,7 @@ import { Connection } from 'typeorm';
 import app from '../../src/infra/http/app';
 import createConnection from '../../src/infra/typeorm';
 import User from '../../src/domain/models/User';
+import AppError from '../../src/errors/AppError';
 
 describe('Session', () => {
 	let connection: Connection;
@@ -47,14 +48,6 @@ describe('Session', () => {
 
 		expect(response.status).toBe(201);
 		expect(response.body).toHaveProperty('token');
-	});
-
-	it('should not be able to create a session with invalid credentials', async () => {
-		const response = await request(app)
-			.post('/sessions')
-			.send({ email, password: 'wrongPassword' });
-
-		expect(response.status).toBe(401);
 	});
 
 	it('should be able to access private routes when authenticated', async () => {

@@ -4,6 +4,7 @@ import iJWTProvider, {
 	Payload,
 	Token,
 } from '../../domain/providers/iJWTProvider';
+import AppError from '../../errors/AppError';
 
 class JWTProvider implements iJWTProvider {
 	private secret = authConfig.jwt.secret;
@@ -17,7 +18,7 @@ class JWTProvider implements iJWTProvider {
 
 			return { token };
 		} catch {
-			throw new Error('Invalid payload');
+			throw new AppError('Invalid payload');
 		}
 	}
 
@@ -26,7 +27,7 @@ class JWTProvider implements iJWTProvider {
 			const payload = verify(token, this.secret) as Payload;
 			return payload;
 		} catch {
-			throw new Error('Invalid token');
+			throw new AppError('Invalid token', 401);
 		}
 	}
 }

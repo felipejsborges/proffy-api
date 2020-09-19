@@ -1,3 +1,4 @@
+import AppError from '../../../errors/AppError';
 import Class from '../../models/Class';
 import iClassesRepository from '../../repositories/iClassesRepository';
 
@@ -14,7 +15,7 @@ class ShowClassService {
 		});
 
 		if (!classItem) {
-			throw new Error('This class does not exist');
+			throw new AppError('This class does not exist');
 		}
 
 		return classItem;

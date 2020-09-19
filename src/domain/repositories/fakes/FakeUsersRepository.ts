@@ -5,6 +5,7 @@ import iUsersRepository, {
 	updateUserDTO,
 } from '../../../domain/repositories/iUsersRepository';
 import User from '../../../domain/models/User';
+import AppError from '../../../errors/AppError';
 
 class UsersRepository implements iUsersRepository {
 	private users: User[] = [];
@@ -56,7 +57,7 @@ class UsersRepository implements iUsersRepository {
 		const index = this.users.findIndex(user => user.id === user_id);
 
 		if (index < 0) {
-			throw new Error('User does not found');
+			throw new AppError('User does not found', 401);
 		}
 
 		name && (this.users[index].name = name);

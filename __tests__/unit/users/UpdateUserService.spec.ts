@@ -34,14 +34,12 @@ describe('UpdateUser', () => {
 			old_password: password,
 			new_password: 'new_password',
 			password_confirmation: 'new_password',
-			avatar,
 			bio,
 			whatsapp,
 		});
 
 		expect(updatedUser.name).toBe('Fake Changed Name');
 		expect(updatedUser.email).toBe('fakeChangedEmail@test.com');
-		expect(updatedUser.avatar).toBe(avatar);
 		expect(updatedUser.bio).toBe(bio);
 		expect(updatedUser.whatsapp).toBe(whatsapp);
 	});

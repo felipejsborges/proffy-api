@@ -59,7 +59,6 @@ class UsersController {
 			new_password,
 			password_confirmation,
 			email,
-			avatar,
 			whatsapp,
 			bio,
 		});

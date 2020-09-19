@@ -1,3 +1,4 @@
+import AppError from '../../../errors/AppError';
 import User from '../../models/User';
 import iHashProvider from '../../providers/iHashProvider';
 import iJWTProvider from '../../providers/iJWTProvider';
@@ -24,7 +25,7 @@ class AuthenticateUserService {
 		const user = await this.usersRepository.findOneByEmail({ email });
 
 		if (!user) {
-			throw new Error(`Incorrect login information`);
+			throw new AppError('Incorrect login information', 401);
 		}
 
 		const passwordMatch = await this.hashProvider.compareHash(
@@ -33,7 +34,7 @@ class AuthenticateUserService {
 		);
 
 		if (!passwordMatch) {
-			throw new Error(`Incorrect login information`);
+			throw new AppError('Incorrect login information', 401);
 		}
 
 		const { token } = this.jwtProvider.generate({ user_id: user.id });

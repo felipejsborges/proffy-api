@@ -18,13 +18,9 @@ class SessionsController {
 			bCryptHashProvider,
 		);
 
-		try {
-			const user = await authenticateUser.execute({ email, password });
+		const user = await authenticateUser.execute({ email, password });
 
-			return response.status(201).send(user);
-		} catch (err) {
-			return response.status(401).send(err);
-		}
+		return response.status(201).send(user);
 	}
 }
 

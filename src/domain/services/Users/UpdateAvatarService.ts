@@ -3,6 +3,7 @@ import iUsersRepository from '../../repositories/iUsersRepository';
 import { tempFolder } from '../../../config/upload';
 import path from 'path';
 import fs from 'fs';
+import AppError from '../../../errors/AppError';
 
 interface Request {
 	user_id: string;
@@ -16,7 +17,7 @@ class UpdateUserService {
 		const user = await this.usersRepository.findOneById({ user_id });
 
 		if (!user) {
-			throw new Error('User does not exist');
+			throw new AppError('User does not exist', 401);
 		}
 
 		if (user.avatar) {

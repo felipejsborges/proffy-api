@@ -24,7 +24,6 @@ class UpdateUserService {
 		old_password,
 		new_password,
 		password_confirmation,
-		avatar,
 		whatsapp,
 		bio,
 	}: Request): Promise<User> {
@@ -33,7 +32,6 @@ class UpdateUserService {
 			name,
 			email,
 			new_password: new_password && (await hash(new_password, 8)),
-			avatar,
 			whatsapp,
 			bio,
 		});

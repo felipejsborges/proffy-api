@@ -3,6 +3,7 @@ import path from 'path';
 import crypto from 'crypto';
 
 import formidable from 'formidable';
+import AppError from '../errors/AppError';
 
 export const tempFolder = path.resolve(__dirname, '..', '..', 'temp');
 
@@ -19,7 +20,7 @@ function upload(
 
 	form.on('fileBegin', (name, file) => {
 		if (!file) {
-			throw new Error('Missing avatar file');
+			throw new AppError('Missing avatar file');
 		}
 
 		const hash = crypto.randomBytes(4).toString('hex');
@@ -35,7 +36,7 @@ function upload(
 		const file = files.avatar;
 
 		if (!file) {
-			throw new Error('Missing avatar file');
+			throw new AppError('Missing avatar file');
 		}
 
 		request.fileName = file.name;

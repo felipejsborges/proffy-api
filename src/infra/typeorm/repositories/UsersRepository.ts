@@ -7,6 +7,7 @@ import iUsersRepository, {
 	updateUserDTO,
 } from '../../../domain/repositories/iUsersRepository';
 import User from '../../../domain/models/User';
+import AppError from '../../../errors/AppError';
 
 class UsersRepository implements iUsersRepository {
 	private ormRepository: Repository<UserTypeORM>;
@@ -66,7 +67,7 @@ class UsersRepository implements iUsersRepository {
 		const user = await this.ormRepository.findOne(user_id);
 
 		if (!user) {
-			throw new Error('User does not found');
+			throw new AppError('User does not found');
 		}
 
 		name && (user.name = name);

@@ -1,3 +1,4 @@
+import AppError from '../../../errors/AppError';
 import User from '../../models/User';
 import iUsersRepository from '../../repositories/iUsersRepository';
 
@@ -12,7 +13,7 @@ class ShowUserService {
 		const user = await this.usersRepository.findOneById({ user_id });
 
 		if (!user) {
-			throw new Error('This user does not exist');
+			throw new AppError('This user does not exist', 404);
 		}
 
 		return user;
