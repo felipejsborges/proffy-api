@@ -1,7 +1,7 @@
 import ClassScheduleTypeORM from '../../../infra/typeorm/entities/ClassScheduleTypeORM';
 import ClassSchedule from '../../models/ClassSchedule';
 import iClassesSchedulesRepository from '../../repositories/iClassesSchedulesRepository';
-import convertHourToMinute from '../../../utils/convertHourToMinute';
+import convertHourToMinute from '../../../shared/utils/convertHourToMinute';
 
 interface scheduleItem {
 	week_day: number;

@@ -29,7 +29,6 @@ export interface findOneUserByEmailDTO {
 
 export default interface iUsersRepository {
 	create(data: createUserDTO): Promise<User>;
-	findAll(): Promise<User[]>;
 	findOneById(data: findOneUserByIdDTO): Promise<User | undefined>;
 	findOneByEmail(data: findOneUserByEmailDTO): Promise<User | undefined>;
 	update(data: updateUserDTO): Promise<User>;

@@ -3,6 +3,7 @@ import faker from 'faker';
 import ShowUserService from '../../../src/domain/services/Users/ShowUserService';
 import FakeUsersRepository from '../../../src/domain/repositories/fakes/FakeUsersRepository';
 import User from '../../../src/domain/models/User';
+import AppError from '../../../src/shared/errors/AppError';
 
 describe('ShowUser', () => {
 	let fakeUsersRepository: FakeUsersRepository;
@@ -29,5 +30,11 @@ describe('ShowUser', () => {
 		expect(user).toBeInstanceOf(User);
 		expect(user.name).toBe(name);
 		expect(user.email).toBe(email);
+	});
+
+	it('should not be able to get info of a non-existing user', async () => {
+		await expect(
+			showUser.execute({ user_id: 'non-existingUserID' }),
+		).rejects.toBeInstanceOf(AppError);
 	});
 });

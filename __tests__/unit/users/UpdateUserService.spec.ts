@@ -23,7 +23,6 @@ describe('UpdateUser', () => {
 			password,
 		});
 
-		const avatar = faker.image.imageUrl();
 		const bio = faker.lorem.paragraph();
 		const whatsapp = faker.phone.phoneNumber();
 

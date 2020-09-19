@@ -1,5 +1,5 @@
-import authConfig from '../../../config/auth';
-import AppError from '../../../errors/AppError';
+import authConfig from '../../../shared/config/auth';
+import AppError from '../../../shared/errors/AppError';
 import iJWTProvider, { Payload, Token } from '../iJWTProvider';
 
 class FakeJWTProvider implements iJWTProvider {

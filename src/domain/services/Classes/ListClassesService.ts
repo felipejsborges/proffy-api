@@ -1,5 +1,5 @@
-import AppError from '../../../errors/AppError';
-import convertHourToMinutes from '../../../utils/convertHourToMinute';
+import AppError from '../../../shared/errors/AppError';
+import convertHourToMinutes from '../../../shared/utils/convertHourToMinute';
 import Class from '../../models/Class';
 import iClassesRepository from '../../repositories/iClassesRepository';
 

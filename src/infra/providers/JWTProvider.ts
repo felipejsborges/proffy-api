@@ -1,10 +1,10 @@
 import { sign, verify } from 'jsonwebtoken';
-import authConfig from '../../config/auth';
+import authConfig from '../../shared/config/auth';
 import iJWTProvider, {
 	Payload,
 	Token,
 } from '../../domain/providers/iJWTProvider';
-import AppError from '../../errors/AppError';
+import AppError from '../../shared/errors/AppError';
 
 class JWTProvider implements iJWTProvider {
 	private secret = authConfig.jwt.secret;

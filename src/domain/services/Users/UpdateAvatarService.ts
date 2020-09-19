@@ -1,17 +1,18 @@
 import User from '../../models/User';
 import iUsersRepository from '../../repositories/iUsersRepository';
-import { tempFolder } from '../../../config/upload';
-import path from 'path';
-import fs from 'fs';
-import AppError from '../../../errors/AppError';
+import AppError from '../../../shared/errors/AppError';
+import iStorageProvider from '../../providers/iStorageProvider';
 
 interface Request {
 	user_id: string;
 	fileName: string;
 }
 
-class UpdateUserService {
-	constructor(private usersRepository: iUsersRepository) {}
+class UpdateAvatarService {
+	constructor(
+		private usersRepository: iUsersRepository,
+		private storageProvider: iStorageProvider,
+	) {}
 
 	public async execute({ user_id, fileName }: Request): Promise<User> {
 		const user = await this.usersRepository.findOneById({ user_id });
@@ -21,24 +22,20 @@ class UpdateUserService {
 		}
 
 		if (user.avatar) {
-			const avatarPathToDelete = path.join(tempFolder, user.avatar);
-
-			const avatarPathToDeleteExists = await fs.promises.stat(
-				avatarPathToDelete,
-			);
-
-			if (avatarPathToDeleteExists) {
-				await fs.promises.unlink(avatarPathToDelete);
-			}
+			this.storageProvider.deleteFile(user.avatar);
 		}
+
+		const savedFileName = await this.storageProvider.saveFile(fileName);
+
+		user.avatar = savedFileName;
 
 		const updatedUser = await this.usersRepository.update({
 			user_id,
-			avatar: fileName,
+			avatar: savedFileName,
 		});
 
 		return updatedUser;
 	}
 }
 
-export default UpdateUserService;
+export default UpdateAvatarService;

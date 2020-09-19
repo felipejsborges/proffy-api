@@ -7,17 +7,13 @@ import iUsersRepository, {
 	updateUserDTO,
 } from '../../../domain/repositories/iUsersRepository';
 import User from '../../../domain/models/User';
-import AppError from '../../../errors/AppError';
+import AppError from '../../../shared/errors/AppError';
 
 class UsersRepository implements iUsersRepository {
 	private ormRepository: Repository<UserTypeORM>;
 
 	constructor() {
 		this.ormRepository = getRepository(UserTypeORM);
-	}
-
-	public async findAll(): Promise<User[]> {
-		return await this.ormRepository.find();
 	}
 
 	public async create({

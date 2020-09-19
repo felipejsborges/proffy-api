@@ -1,12 +1,11 @@
 import faker from 'faker';
 
 import AuthenticateUserService from '../../../src/domain/services/Users/AuthenticateUserService';
-
 import FakeUsersRepository from '../../../src/domain/repositories/fakes/FakeUsersRepository';
-
 import FakeJWTProvider from '../../../src/domain/providers/fakes/FakeJWTProvider';
 import FakeHashProvider from '../../../src/domain/providers/fakes/FakeHashProvider';
-import AppError from '../../../src/errors/AppError';
+
+import AppError from '../../../src/shared/errors/AppError';
 
 describe('AuthenticateUser', () => {
 	let fakeUsersRepository: FakeUsersRepository;

@@ -1,18 +1,19 @@
 import { Request, Response, NextFunction } from 'express';
-import path from 'path';
-import crypto from 'crypto';
-
 import formidable from 'formidable';
-import AppError from '../errors/AppError';
+import path from 'path';
 
-export const tempFolder = path.resolve(__dirname, '..', '..', 'temp');
+import AppError from '../../../shared/errors/AppError';
 
-function upload(
+import uploadConfig from '../../../shared/config/upload';
+
+function uploadHandler(
 	request: Request,
 	response: Response,
 	next: NextFunction,
 ): void {
 	const form = new formidable.IncomingForm();
+
+	const { tempFolder, hashGenerator } = uploadConfig;
 
 	form.uploadDir = tempFolder;
 	form.multiples = false;
@@ -23,7 +24,7 @@ function upload(
 			throw new AppError('Missing avatar file');
 		}
 
-		const hash = crypto.randomBytes(4).toString('hex');
+		const hash = hashGenerator();
 
 		const fileName = hash + '-' + file.name;
 
@@ -45,4 +46,4 @@ function upload(
 	});
 }
 
-export default upload;
+export default uploadHandler;

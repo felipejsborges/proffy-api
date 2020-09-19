@@ -3,7 +3,7 @@ import express from 'express';
 import AvatarsController from '../controllers/AvatarsController';
 
 import ensureUserIsAuthenticated from '../middlewares/ensureUserIsAuthenticated';
-import upload from '../../../config/upload';
+import uploadHandler from '../middlewares/uploadHandler';
 
 const avatarRoutes = express.Router();
 
@@ -12,7 +12,7 @@ const avatarsController = new AvatarsController();
 avatarRoutes.patch(
 	'/users/avatar',
 	ensureUserIsAuthenticated,
-	upload,
+	uploadHandler,
 	avatarsController.update,
 );
 

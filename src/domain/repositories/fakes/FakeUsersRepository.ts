@@ -5,14 +5,10 @@ import iUsersRepository, {
 	updateUserDTO,
 } from '../../../domain/repositories/iUsersRepository';
 import User from '../../../domain/models/User';
-import AppError from '../../../errors/AppError';
+import AppError from '../../../shared/errors/AppError';
 
 class UsersRepository implements iUsersRepository {
 	private users: User[] = [];
-
-	public async findAll(): Promise<User[]> {
-		return this.users;
-	}
 
 	public async create({
 		name,

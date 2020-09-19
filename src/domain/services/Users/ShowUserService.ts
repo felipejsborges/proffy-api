@@ -1,4 +1,4 @@
-import AppError from '../../../errors/AppError';
+import AppError from '../../../shared/errors/AppError';
 import User from '../../models/User';
 import iUsersRepository from '../../repositories/iUsersRepository';
 

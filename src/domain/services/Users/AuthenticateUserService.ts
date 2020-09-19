@@ -1,4 +1,4 @@
-import AppError from '../../../errors/AppError';
+import AppError from '../../../shared/errors/AppError';
 import User from '../../models/User';
 import iHashProvider from '../../providers/iHashProvider';
 import iJWTProvider from '../../providers/iJWTProvider';

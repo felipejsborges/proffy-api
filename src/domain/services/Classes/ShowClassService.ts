@@ -1,4 +1,4 @@
-import AppError from '../../../errors/AppError';
+import AppError from '../../../shared/errors/AppError';
 import Class from '../../models/Class';
 import iClassesRepository from '../../repositories/iClassesRepository';
 
