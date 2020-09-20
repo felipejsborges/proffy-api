@@ -10,7 +10,6 @@ export default function ensureUserIsAuthenticated(
 	const authHeader = request.headers.authorization;
 
 	if (!authHeader) {
-		response.statusCode = 401;
 		throw new AppError('Missing token', 401);
 	}
 

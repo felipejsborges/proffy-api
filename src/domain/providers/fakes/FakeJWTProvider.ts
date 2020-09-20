@@ -24,7 +24,11 @@ class FakeJWTProvider implements iJWTProvider {
 		const [, tokenPayload, tokenSignature] = token.split('.');
 
 		if (tokenSignature === 'tokenSignatureSimulator: ' + this.secret) {
-			const [, payload] = tokenPayload.split(': ') as [string, Payload];
+			const [, user_id] = tokenPayload.split(': ') as [string, string];
+
+			const payload = {
+				user_id,
+			};
 
 			return payload;
 		} else {
