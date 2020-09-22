@@ -2,8 +2,8 @@ import {
 	Entity,
 	PrimaryGeneratedColumn,
 	Column,
+	JoinColumn,
 	ManyToOne,
-	JoinColumn,, ManyToMany
 } from 'typeorm';
 
 import FavoritedTeacher from '../../../domain/models/FavoritedTeacher';
@@ -17,19 +17,13 @@ class FavoritedTeacherTypeORM implements FavoritedTeacher {
 	@Column()
 	user_id: string;
 
-	@ManyToOne(() => UserTypeORM, user => user.favoritedUser, {
-		onDelete: 'CASCADE',
-		onUpdate: 'CASCADE',
-	})
-	@JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
-	user: UserTypeORM;
-
 	@Column()
 	teacher_id: string;
 
-	@ManyToMany(() => UserTypeORM, user => user.favoritedTeachers, {
+	@ManyToOne(() => UserTypeORM, user => user.favoritedTeacher, {
 		onDelete: 'CASCADE',
 		onUpdate: 'CASCADE',
+		eager: true,
 	})
 	@JoinColumn({ name: 'teacher_id', referencedColumnName: 'id' })
 	teacher: UserTypeORM;

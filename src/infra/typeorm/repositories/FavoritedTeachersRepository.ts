@@ -1,8 +1,9 @@
 import { getRepository, Repository } from 'typeorm';
 import FavoritedTeacher from '../../../domain/models/FavoritedTeacher';
 import iFavoritedTeachersRepository, {
-	favoriteUserDTO,
+	favoriteTeacherDTO,
 } from '../../../domain/repositories/iFavoritedTeachersRepository';
+import FavoritedTeacherTypeORM from '../entities/FavoritedTeacherTypeORM';
 
 class FavoritedTeachersRepository implements iFavoritedTeachersRepository {
 	private ormRepository: Repository<FavoritedTeacherTypeORM>;
@@ -11,10 +12,10 @@ class FavoritedTeachersRepository implements iFavoritedTeachersRepository {
 		this.ormRepository = getRepository(FavoritedTeacherTypeORM);
 	}
 
-	public async favoriteUser({
+	public async save({
 		user_id,
 		teacher_id,
-	}: favoriteUserDTO): Promise<FavoritedTeacher> {
+	}: favoriteTeacherDTO): Promise<FavoritedTeacher> {
 		const favoritedTeacher = new FavoritedTeacher({
 			user_id,
 			teacher_id,
@@ -27,10 +28,18 @@ class FavoritedTeachersRepository implements iFavoritedTeachersRepository {
 		return savedFavoritedTeacher;
 	}
 
-	public async unfavoriteUser(favorite_id: string): Promise<void> {
+	public async findAllByUserId(user_id: string): Promise<FavoritedTeacher[]> {
+		const favoritedTeachers = await this.ormRepository.find({
+			where: { user_id },
+		});
+
+		return favoritedTeachers;
+	}
+
+	public async delete(favorite_id: string): Promise<void> {
 		const favoritedTeacher = await this.ormRepository.findByIds([favorite_id]);
 
-		await this.ormRepository.delete(favoritedTeacher);
+		await this.ormRepository.delete(favoritedTeacher[0]);
 	}
 }
 

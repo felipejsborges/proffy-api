@@ -1,15 +1,15 @@
 import FavoritedTeacher from '../../../domain/models/FavoritedTeacher';
 import iFavoritedTeachersRepository, {
-	favoriteUserDTO,
+	favoriteTeacherDTO,
 } from '../../../domain/repositories/iFavoritedTeachersRepository';
 
 class FakeFavoritedTeachersRepository implements iFavoritedTeachersRepository {
 	private favoritedTeachers: FavoritedTeacher[] = [];
 
-	public async favoriteUser({
+	public async save({
 		user_id,
 		teacher_id,
-	}: favoriteUserDTO): Promise<FavoritedTeacher> {
+	}: favoriteTeacherDTO): Promise<FavoritedTeacher> {
 		const favorited = new FavoritedTeacher({
 			user_id,
 			teacher_id,
@@ -20,7 +20,19 @@ class FakeFavoritedTeachersRepository implements iFavoritedTeachersRepository {
 		return favorited;
 	}
 
-	public async unfavoriteUser(favorite_id: string): Promise<void> {
+	public async findAllByUserId(user_id: string): Promise<FavoritedTeacher[]> {
+		const thisUserFavoritedTeachers: FavoritedTeacher[] = [];
+
+		this.favoritedTeachers.forEach(favoritedTeacher => {
+			if (favoritedTeacher.user_id === user_id) {
+				thisUserFavoritedTeachers.push(favoritedTeacher);
+			}
+		});
+
+		return thisUserFavoritedTeachers;
+	}
+
+	public async delete(favorite_id: string): Promise<void> {
 		const filteredFavoritedTeachers = this.favoritedTeachers.filter(
 			favoriteItem => favoriteItem.id !== favorite_id,
 		);

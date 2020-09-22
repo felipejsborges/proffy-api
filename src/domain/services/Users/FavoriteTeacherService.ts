@@ -13,7 +13,7 @@ class FavoriteTeacherService {
 		user_id,
 		teacher_id,
 	}: Request): Promise<FavoritedTeacher> {
-		return await this.favoritesRepository.favoriteUser({
+		return await this.favoritesRepository.save({
 			user_id,
 			teacher_id,
 		});

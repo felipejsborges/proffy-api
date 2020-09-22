@@ -1,11 +1,12 @@
 import FavoritedTeacher from '../models/FavoritedTeacher';
 
-export interface favoriteUserDTO {
+export interface favoriteTeacherDTO {
 	user_id: string;
 	teacher_id: string;
 }
 
 export default interface iFavoritedTeachersRepository {
-	favoriteUser(data: favoriteUserDTO): Promise<FavoritedTeacher>;
-	unfavoriteUser(favorite_id: string): Promise<void>;
+	save(data: favoriteTeacherDTO): Promise<FavoritedTeacher>;
+	findAllByUserId(user_id: string): Promise<FavoritedTeacher[]>;
+	delete(favorite_id: string): Promise<void>;
 }
