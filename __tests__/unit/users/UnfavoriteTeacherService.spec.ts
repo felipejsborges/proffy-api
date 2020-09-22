@@ -1,15 +1,15 @@
 import faker from 'faker';
 
-import ShowUserFavoriteTeachersService from '../../../src/domain/services/Users/ShowUserFavoriteTeachersService';
+import UnfavoriteTeacherService from '../../../src/domain/services/Users/UnfavoriteTeacherService';
 import FakeFavoritedTeachersRepository from '../../../src/domain/repositories/fakes/FakeFavoritedTeachersRepository';
 
 import FakeUsersRepository from '../../../src/domain/repositories/fakes/FakeUsersRepository';
 
 import User from '../../../src/domain/models/User';
 
-describe('ShowUserFavoriteTeachers', () => {
+describe('UnfavoriteTeacher', () => {
 	let fakeFavoritedTeachersRepository: FakeFavoritedTeachersRepository;
-	let showUserFavoriteTeachers: ShowUserFavoriteTeachersService;
+	let unfavoriteTeacher: UnfavoriteTeacherService;
 
 	let fakeUsersRepository: FakeUsersRepository;
 
@@ -18,7 +18,7 @@ describe('ShowUserFavoriteTeachers', () => {
 
 	beforeEach(async () => {
 		fakeFavoritedTeachersRepository = new FakeFavoritedTeachersRepository();
-		showUserFavoriteTeachers = new ShowUserFavoriteTeachersService(
+		unfavoriteTeacher = new UnfavoriteTeacherService(
 			fakeFavoritedTeachersRepository,
 		);
 
@@ -50,17 +50,25 @@ describe('ShowUserFavoriteTeachers', () => {
 		});
 	});
 
-	it('should be able to list favorite teachers of a specific user', async () => {
-		const findAllByUserId = jest.spyOn(
+	it('should be able to unfavorite a teacher', async () => {
+		const deleteFunction = jest.spyOn(
 			fakeFavoritedTeachersRepository,
-			'findAllByUserId',
+			'delete',
 		);
 
-		const favoriteTeachers = await showUserFavoriteTeachers.execute({
+		await unfavoriteTeacher.execute({
 			user_id: user.id,
+			teacher_id: teacher.id,
 		});
 
-		expect(favoriteTeachers).toHaveLength(1);
-		expect(findAllByUserId).toHaveBeenCalledWith(user.id);
+		const favoritedTeachers = await fakeFavoritedTeachersRepository.findAllByUserId(
+			user.id,
+		);
+
+		expect(favoritedTeachers).toHaveLength(0);
+		expect(deleteFunction).toHaveBeenCalledWith({
+			user_id: user.id,
+			teacher_id: teacher.id,
+		});
 	});
 });

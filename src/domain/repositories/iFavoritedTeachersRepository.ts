@@ -5,8 +5,10 @@ export interface favoriteTeacherDTO {
 	teacher_id: string;
 }
 
+export type unfavoriteTeacherDTO = favoriteTeacherDTO;
+
 export default interface iFavoritedTeachersRepository {
 	save(data: favoriteTeacherDTO): Promise<FavoritedTeacher>;
 	findAllByUserId(user_id: string): Promise<FavoritedTeacher[]>;
-	delete(favorite_id: string): Promise<void>;
+	delete(data: unfavoriteTeacherDTO): Promise<void>;
 }

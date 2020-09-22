@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 
 import FavoriteTeacherService from '../../../domain/services/Users/FavoriteTeacherService';
+import UnfavoriteTeacherService from '../../../domain/services/Users/UnfavoriteTeacherService';
 import ShowUserFavoriteTeachersService from '../../../domain/services/Users/ShowUserFavoriteTeachersService';
 
 import FavoritedTeachersRepository from '../../../infra/typeorm/repositories/FavoritedTeachersRepository';
@@ -36,10 +37,23 @@ class ConnectionsController {
 		return response.status(200).json(userFavoritedTeachers);
 	}
 
-	// public async delete(
-	// 	request: Request,
-	// 	response: Response,
-	// ): Promise<Response> {}
+	public async delete(request: Request, response: Response): Promise<Response> {
+		const favoritedTeachersRepository = new FavoritedTeachersRepository();
+		const unfavoriteTeacher = new UnfavoriteTeacherService(
+			favoritedTeachersRepository,
+		);
+
+		const user_id = request.user.id;
+
+		const { teacher_id } = request.params;
+
+		await unfavoriteTeacher.execute({
+			user_id,
+			teacher_id,
+		});
+
+		return response.status(204).json();
+	}
 }
 
 export default ConnectionsController;

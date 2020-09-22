@@ -20,6 +20,9 @@ favoriteTeachersRoutes.get(
 	favoriteTeachersController.index,
 );
 
-// favoriteTeachersRoutes.delete('/favorite-teachers/:teacher_id', favoriteTeachersController.delete);
+favoriteTeachersRoutes.delete(
+	'/favorite-teachers/:teacher_id',
+	favoriteTeachersController.delete,
+);
 
 export default favoriteTeachersRoutes;

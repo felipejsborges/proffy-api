@@ -2,6 +2,7 @@ import { getRepository, Repository } from 'typeorm';
 import FavoritedTeacher from '../../../domain/models/FavoritedTeacher';
 import iFavoritedTeachersRepository, {
 	favoriteTeacherDTO,
+	unfavoriteTeacherDTO,
 } from '../../../domain/repositories/iFavoritedTeachersRepository';
 import FavoritedTeacherTypeORM from '../entities/FavoritedTeacherTypeORM';
 
@@ -36,10 +37,15 @@ class FavoritedTeachersRepository implements iFavoritedTeachersRepository {
 		return favoritedTeachers;
 	}
 
-	public async delete(favorite_id: string): Promise<void> {
-		const favoritedTeacher = await this.ormRepository.findByIds([favorite_id]);
+	public async delete({
+		user_id,
+		teacher_id,
+	}: unfavoriteTeacherDTO): Promise<void> {
+		const teachersToUnfavorite = await this.ormRepository.find({
+			where: { user_id, teacher_id },
+		});
 
-		await this.ormRepository.delete(favoritedTeacher[0]);
+		await this.ormRepository.delete(teachersToUnfavorite[0]);
 	}
 }
 

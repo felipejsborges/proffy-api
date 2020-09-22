@@ -38,7 +38,7 @@ describe('SendEmailToRecoverPassword', () => {
 	});
 
 	it('should be able to send e-mail to recover password', async () => {
-		const sendMail = spyOn(fakeMailProvider, 'sendMail');
+		const sendMail = jest.spyOn(fakeMailProvider, 'sendMail');
 
 		await sendEmailToRecoverPassword.execute({ email });
 
