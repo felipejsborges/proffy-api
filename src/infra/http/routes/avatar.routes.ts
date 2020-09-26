@@ -1,9 +1,9 @@
 import express from 'express';
 
-import AvatarsController from '../controllers/AvatarsController';
-
 import ensureUserIsAuthenticated from '../middlewares/ensureUserIsAuthenticated';
 import uploadHandler from '../middlewares/uploadHandler';
+
+import AvatarsController from '../controllers/AvatarsController';
 
 const avatarRoutes = express.Router();
 

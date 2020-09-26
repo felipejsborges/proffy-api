@@ -10,8 +10,11 @@ class ConnectionsRepository implements iConnectionsRepository {
 		return this.connections.length;
 	}
 
-	public async create({ user_id }: createConnectionDTO): Promise<Connection> {
-		const connection = new Connection({ user_id });
+	public async create({
+		user_id,
+		teacher_id,
+	}: createConnectionDTO): Promise<Connection> {
+		const connection = new Connection({ user_id, teacher_id });
 
 		this.connections.push(connection);
 

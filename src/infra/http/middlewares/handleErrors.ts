@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { ValidationError } from 'joi';
 import AppError from '../../../shared/errors/AppError';
 
 export default function handleErrors(
@@ -6,10 +7,18 @@ export default function handleErrors(
 	request: Request,
 	response: Response,
 	next: NextFunction,
-): any {
+): Response {
 	if (err instanceof AppError) {
-		return response.status(err.status).json({
-			message: 'Error: ' + err.message,
+		return response.status(err.statusCode).json({
+			status: 'error',
+			message: err.message,
+		});
+	}
+
+	if (err instanceof ValidationError) {
+		return response.status(400).json({
+			status: 'validation error',
+			message: err.message,
 		});
 	}
 

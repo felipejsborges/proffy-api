@@ -2,6 +2,7 @@ import Connection from '../models/Connection';
 
 export interface createConnectionDTO {
 	user_id: string;
+	teacher_id: string;
 }
 
 export default interface iConnectionsRepository {

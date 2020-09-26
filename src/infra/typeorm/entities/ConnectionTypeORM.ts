@@ -9,6 +9,9 @@ class ConnectionTypeORM implements Connection {
 
 	@Column()
 	user_id: string;
+
+	@Column()
+	teacher_id: string;
 }
 
 export default ConnectionTypeORM;

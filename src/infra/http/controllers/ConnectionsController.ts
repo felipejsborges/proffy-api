@@ -19,9 +19,10 @@ class ConnectionsController {
 		const connectionsRepository = new ConnectionsRepository();
 		const createConnection = new CreateConnectionService(connectionsRepository);
 
-		const { user_id } = request.body;
+		const user_id = request.user.id;
+		const { teacher_id } = request.body;
 
-		await createConnection.execute({ user_id });
+		await createConnection.execute({ user_id, teacher_id });
 
 		return response.status(201).send();
 	}

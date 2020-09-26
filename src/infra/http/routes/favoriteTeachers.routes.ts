@@ -8,20 +8,21 @@ const favoriteTeachersRoutes = express.Router();
 
 const favoriteTeachersController = new FavoriteTeachersController();
 
-favoriteTeachersRoutes.use(ensureUserIsAuthenticated);
-
 favoriteTeachersRoutes.post(
 	'/favorite-teachers/:teacher_id',
+	ensureUserIsAuthenticated,
 	favoriteTeachersController.create,
 );
 
 favoriteTeachersRoutes.get(
 	'/favorite-teachers',
+	ensureUserIsAuthenticated,
 	favoriteTeachersController.index,
 );
 
 favoriteTeachersRoutes.delete(
 	'/favorite-teachers/:teacher_id',
+	ensureUserIsAuthenticated,
 	favoriteTeachersController.delete,
 );
 

@@ -1,4 +1,5 @@
 import { hash } from 'bcryptjs';
+import AppError from '../../../shared/errors/AppError';
 import User from '../../models/User';
 import iUsersRepository from '../../repositories/iUsersRepository';
 
@@ -22,6 +23,12 @@ class CreateUserService {
 		whatsapp,
 		bio,
 	}: Request): Promise<User> {
+		const userExist = await this.usersRepository.findOneByEmail({ email });
+
+		if (userExist) {
+			throw new AppError('This e-mail is already registered');
+		}
+
 		return await this.usersRepository.create({
 			name,
 			email,

@@ -15,7 +15,9 @@ describe('Connection', () => {
 
 	it('should be able to create a connection', async () => {
 		const user_id = faker.random.uuid();
-		const connection = await createConnection.execute({ user_id });
+		const teacher_id = faker.random.uuid();
+
+		const connection = await createConnection.execute({ user_id, teacher_id });
 
 		expect(connection).toBeInstanceOf(Connection);
 		expect(connection).toHaveProperty('id');

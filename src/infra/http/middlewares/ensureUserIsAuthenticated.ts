@@ -18,11 +18,15 @@ export default function ensureUserIsAuthenticated(
 
 	const jwtProvider = new JWTProvider();
 
-	const payload = jwtProvider.getPayload({ token });
+	try {
+		const payload = jwtProvider.getPayload({ token });
 
-	request.user = {
-		id: payload.user_id,
-	};
+		request.user = {
+			id: payload.user_id,
+		};
 
-	return next();
+		return next();
+	} catch {
+		throw new AppError('Invalid token', 401);
+	}
 }

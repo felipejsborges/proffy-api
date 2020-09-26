@@ -29,7 +29,8 @@ class ClassesController {
 		const classesRepository = new ClassesRepository();
 		const createClass = new CreateClassService(classesRepository);
 
-		const { user_id, subject, cost } = request.body;
+		const user_id = request.user.id;
+		const { subject, cost } = request.body;
 
 		const createdClass = await createClass.execute({
 			user_id,
