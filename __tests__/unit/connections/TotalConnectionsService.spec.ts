@@ -14,11 +14,12 @@ describe('Connection', () => {
 
 	it('should be able to show total connections', async () => {
 		const user_id = faker.random.uuid();
+		const teacher_id = faker.random.uuid();
 
 		const repeat = Math.floor(Math.random() * 6); // 0 ~ 5
 
 		for (let i = 0; i < repeat; i++) {
-			await fakeConnectionsRepository.create({ user_id });
+			await fakeConnectionsRepository.create({ user_id, teacher_id });
 		}
 
 		const total = await totalConnections.execute();

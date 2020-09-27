@@ -4,6 +4,7 @@ import ensureUserIsAuthenticated from '../middlewares/ensureUserIsAuthenticated'
 
 import createClassValidator from '../validators/classes/createClassValidator';
 import showClassValidator from '../validators/classes/showClassValidator';
+import queryParamsHandler from '../middlewares/queryParamsHandler';
 
 import ClassesController from '../controllers/ClassesController';
 
@@ -14,6 +15,7 @@ const classesController = new ClassesController();
 classesRoutes.get(
 	'/classes',
 	ensureUserIsAuthenticated,
+	queryParamsHandler,
 	classesController.index,
 );
 

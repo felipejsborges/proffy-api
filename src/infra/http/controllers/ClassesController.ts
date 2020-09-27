@@ -11,18 +11,23 @@ class ClassesController {
 		const classesRepository = new ClassesRepository();
 		const listClasses = new ListClassesService(classesRepository);
 
-		const filters = request.query;
-		const week_day = filters.week_day as string;
-		const subject = filters.subject as string;
-		const time = filters.time as string;
+		const { subject, week_day, time } = request.listClassesParams.filters;
 
-		const classes = await listClasses.execute({
-			week_day: Number(week_day),
+		const { skip, limit, page } = request.listClassesParams.pagination;
+
+		const paginatedClasses = await listClasses.execute({
+			week_day,
 			subject,
 			time,
+			skip,
+			limit,
 		});
 
-		return response.status(200).json(classes);
+		Object.assign(paginatedClasses, {
+			page,
+		});
+
+		return response.status(200).json(paginatedClasses);
 	}
 
 	public async create(request: Request, response: Response): Promise<Response> {

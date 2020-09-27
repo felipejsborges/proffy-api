@@ -1,5 +1,6 @@
 import iClassesRepository, {
 	createClassDTO,
+	findAllResults,
 	findOneClassDTO,
 } from '../../../domain/repositories/iClassesRepository';
 import Class from '../../../domain/models/Class';
@@ -7,8 +8,11 @@ import Class from '../../../domain/models/Class';
 class ClassesRepository implements iClassesRepository {
 	private classes: Class[] = [];
 
-	public async findAll(): Promise<Class[]> {
-		return this.classes;
+	public async findAll(): Promise<findAllResults> {
+		const classes = this.classes;
+		const total = classes.length;
+
+		return { classes, total };
 	}
 
 	public async findOneById({

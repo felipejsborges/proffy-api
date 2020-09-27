@@ -1,10 +1,11 @@
-import { getRepository, Repository, WhereExpression } from 'typeorm';
+import { getRepository, Repository } from 'typeorm';
 
 import ClassTypeORM from '../entities/ClassTypeORM';
 import iClassesRepository, {
 	findClassesDTO,
 	createClassDTO,
 	findOneClassDTO,
+	findAllResults,
 } from '../../../domain/repositories/iClassesRepository';
 import Class from '../../../domain/models/Class';
 
@@ -18,26 +19,36 @@ class ClassesRepository implements iClassesRepository {
 	public async findAll({
 		week_day,
 		subject,
-		timeInMinutes,
-	}: findClassesDTO): Promise<Class[]> {
-		return await this.ormRepository.find({
+		time,
+		skip = 0,
+		limit = 10,
+	}: findClassesDTO): Promise<findAllResults> {
+		const [classes, total] = await this.ormRepository.findAndCount({
 			join: {
 				alias: 'classes',
 				innerJoin: { classes_schedules: 'classes.classes_schedules' },
 			},
-			where: (qb: WhereExpression) => {
-				qb.where({
-					subject,
-				})
-					.andWhere('classes_schedules.week_day = :week_day', { week_day })
-					.andWhere('classes_schedules.from <= :from', {
-						from: timeInMinutes,
+			where: (qb: any) => {
+				qb.where(subject ? { subject } : '1=1')
+					.andWhere(
+						week_day ? 'classes_schedules.week_day = :week_day' : '1=1',
+						{ week_day },
+					)
+					.andWhere(time ? 'classes_schedules.from <= :from' : '1=1', {
+						from: time,
 					})
-					.andWhere('classes_schedules.to > :to', {
-						to: timeInMinutes,
+					.andWhere(time ? 'classes_schedules.to > :to' : '1=1', {
+						to: time,
 					});
 			},
+			skip,
+			take: limit,
 		});
+
+		return {
+			total,
+			classes,
+		};
 	}
 
 	public async findOneById({

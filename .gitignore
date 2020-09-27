@@ -3,3 +3,5 @@ coverage
 .env
 temp/*
 !temp/.gitkeep
+temp/uploads/*
+!temp/uploads
