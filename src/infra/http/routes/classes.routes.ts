@@ -7,6 +7,8 @@ import showClassValidator from '../validators/classes/showClassValidator';
 import queryParamsHandler from '../middlewares/queryParamsHandler';
 
 import ClassesController from '../controllers/ClassesController';
+import updateClassValidator from '../validators/classes/updateClassValidator';
+import deleteClassValidator from '../validators/classes/deleteClassValidator';
 
 const classesRoutes = express.Router();
 
@@ -26,11 +28,18 @@ classesRoutes.post(
 	classesController.create,
 );
 
-classesRoutes.get(
+classesRoutes.put(
 	'/classes/:class_id',
 	ensureUserIsAuthenticated,
-	showClassValidator,
-	classesController.show,
+	updateClassValidator,
+	classesController.update,
+);
+
+classesRoutes.delete(
+	'/classes/:class_id',
+	ensureUserIsAuthenticated,
+	deleteClassValidator,
+	classesController.delete,
 );
 
 export default classesRoutes;

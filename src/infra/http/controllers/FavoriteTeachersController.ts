@@ -6,7 +6,7 @@ import ShowUserFavoriteTeachersService from '../../../domain/services/Users/Show
 
 import FavoritedTeachersRepository from '../../../infra/typeorm/repositories/FavoritedTeachersRepository';
 
-class ConnectionsController {
+class FavoriteTeachersController {
 	public async create(request: Request, response: Response): Promise<Response> {
 		const favoritedTeachersRepository = new FavoritedTeachersRepository();
 		const favoriteTeacher = new FavoriteTeacherService(
@@ -17,9 +17,9 @@ class ConnectionsController {
 
 		const { teacher_id } = request.params;
 
-		const total = await favoriteTeacher.execute({ user_id, teacher_id });
+		await favoriteTeacher.execute({ user_id, teacher_id });
 
-		return response.status(200).json(total);
+		return response.status(204).send();
 	}
 
 	public async index(request: Request, response: Response): Promise<Response> {
@@ -56,4 +56,4 @@ class ConnectionsController {
 	}
 }
 
-export default ConnectionsController;
+export default FavoriteTeachersController;

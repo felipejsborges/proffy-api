@@ -16,17 +16,15 @@ class FavoritedTeachersRepository implements iFavoritedTeachersRepository {
 	public async save({
 		user_id,
 		teacher_id,
-	}: favoriteTeacherDTO): Promise<FavoritedTeacher> {
+	}: favoriteTeacherDTO): Promise<void> {
 		const favoritedTeacher = new FavoritedTeacher({
 			user_id,
 			teacher_id,
 		});
 
-		const savedFavoritedTeacher = await this.ormRepository.save(
-			favoritedTeacher,
-		);
+		await this.ormRepository.save(favoritedTeacher);
 
-		return savedFavoritedTeacher;
+		return;
 	}
 
 	public async findAllByUserId(user_id: string): Promise<FavoritedTeacher[]> {

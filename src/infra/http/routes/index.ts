@@ -6,6 +6,7 @@ import passwordRoutes from './password.routes';
 import sessionRoutes from './sessions.routes';
 import favoriteTeachersRoutes from './favoriteTeachers.routes';
 import classesRoutes from './classes.routes';
+import teacherClassesRoutes from './teacherClasses.routes';
 import classesSchedulesRoutes from './classesSchedules.routes';
 import connectionsRoutes from './connections.routes';
 
@@ -17,6 +18,7 @@ routes.use(passwordRoutes);
 routes.use(sessionRoutes);
 routes.use(favoriteTeachersRoutes);
 routes.use(classesRoutes);
+routes.use(teacherClassesRoutes);
 routes.use(classesSchedulesRoutes);
 routes.use(connectionsRoutes);
 

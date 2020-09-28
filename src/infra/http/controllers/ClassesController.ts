@@ -2,7 +2,8 @@ import { Request, Response } from 'express';
 
 import CreateClassService from '../../../domain/services/Classes/CreateClassService';
 import ListClassesService from '../../../domain/services/Classes/ListClassesService';
-import ShowClassService from '../../../domain/services/Classes/ShowClassService';
+import UpdateClassService from '../../../domain/services/Classes/UpdateClassService';
+import DeleteClassService from '../../../domain/services/Classes/DeleteClassService';
 
 import ClassesRepository from '../../../infra/typeorm/repositories/ClassesRepository';
 
@@ -46,15 +47,40 @@ class ClassesController {
 		return response.status(201).send(createdClass);
 	}
 
-	public async show(request: Request, response: Response): Promise<Response> {
+	public async update(request: Request, response: Response): Promise<Response> {
 		const classesRepository = new ClassesRepository();
-		const showClass = new ShowClassService(classesRepository);
+		const updateClass = new UpdateClassService(classesRepository);
+
+		const user_id = request.user.id;
 
 		const { class_id } = request.params;
 
-		const classItem = await showClass.execute({ class_id });
+		const { subject, cost } = request.body;
 
-		return response.status(200).json(classItem);
+		const updatedClass = await updateClass.execute({
+			user_id,
+			class_id,
+			subject,
+			cost,
+		});
+
+		return response.status(200).json(updatedClass);
+	}
+
+	public async delete(request: Request, response: Response): Promise<Response> {
+		const classesRepository = new ClassesRepository();
+		const deleteClass = new DeleteClassService(classesRepository);
+
+		const user_id = request.user.id;
+
+		const { class_id } = request.params;
+
+		await deleteClass.execute({
+			user_id,
+			class_id,
+		});
+
+		return response.status(204).send();
 	}
 }
 

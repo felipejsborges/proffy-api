@@ -4,4 +4,4 @@ coverage
 temp/*
 !temp/.gitkeep
 temp/uploads/*
-!temp/uploads
+!temp/uploads/.gitkeep

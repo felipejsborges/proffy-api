@@ -1,4 +1,3 @@
-import FavoritedTeacher from '../../models/FavoritedTeacher';
 import iFavoritedTeachersRepository from '../../repositories/iFavoritedTeachersRepository';
 
 interface Request {
@@ -9,14 +8,13 @@ interface Request {
 class FavoriteTeacherService {
 	constructor(private favoritesRepository: iFavoritedTeachersRepository) {}
 
-	public async execute({
-		user_id,
-		teacher_id,
-	}: Request): Promise<FavoritedTeacher> {
-		return await this.favoritesRepository.save({
+	public async execute({ user_id, teacher_id }: Request): Promise<void> {
+		await this.favoritesRepository.save({
 			user_id,
 			teacher_id,
 		});
+
+		return;
 	}
 }
 

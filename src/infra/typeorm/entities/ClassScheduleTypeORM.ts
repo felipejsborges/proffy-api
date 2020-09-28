@@ -27,7 +27,7 @@ class ClassScheduleTypeORM implements ClassSchedule {
 	class_id: string;
 
 	@ManyToOne(() => ClassTypeORM, classItem => classItem.classes_schedules, {
-		onDelete: 'SET NULL',
+		onDelete: 'CASCADE',
 		onUpdate: 'CASCADE',
 	})
 	@JoinColumn({ name: 'class_id', referencedColumnName: 'id' })

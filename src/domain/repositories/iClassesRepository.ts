@@ -23,8 +23,17 @@ export interface findAllResults {
 	classes: Class[];
 }
 
+export interface updateClassDTO {
+	class_id: string;
+	subject?: string;
+	cost?: number;
+}
+
 export default interface iClassesRepository {
 	create(data: createClassDTO): Promise<Class>;
 	findAll(data: findClassesDTO): Promise<findAllResults>;
 	findOneById(data: findOneClassDTO): Promise<Class | undefined>;
+	findAllOfaTeacher(teacher_id: string): Promise<Class[]>;
+	update(data: updateClassDTO): Promise<Class>;
+	delete(class_id: string): Promise<void>;
 }

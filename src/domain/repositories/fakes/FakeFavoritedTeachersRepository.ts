@@ -10,7 +10,7 @@ class FakeFavoritedTeachersRepository implements iFavoritedTeachersRepository {
 	public async save({
 		user_id,
 		teacher_id,
-	}: favoriteTeacherDTO): Promise<FavoritedTeacher> {
+	}: favoriteTeacherDTO): Promise<void> {
 		const favorited = new FavoritedTeacher({
 			user_id,
 			teacher_id,
@@ -18,11 +18,10 @@ class FakeFavoritedTeachersRepository implements iFavoritedTeachersRepository {
 
 		this.favoritedTeachers.push(favorited);
 
-		return favorited;
+		return;
 	}
 
 	public async findAllByUserId(user_id: string): Promise<FavoritedTeacher[]> {
-		console.log('TEST');
 		const thisUserFavoritedTeachers = this.favoritedTeachers.filter(
 			favoritedTeacher => favoritedTeacher.user_id === user_id,
 		);

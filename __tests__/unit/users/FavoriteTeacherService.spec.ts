@@ -46,12 +46,15 @@ describe('FavoriteTeacher', () => {
 	});
 
 	it('should be able to favorite a teacher', async () => {
-		const favoriteTeacherDetails = await favoriteTeacher.execute({
+		await favoriteTeacher.execute({
 			user_id: user.id,
 			teacher_id: teacher.id,
 		});
 
-		expect(favoriteTeacherDetails).toHaveProperty('id');
-		expect(favoriteTeacherDetails).toHaveProperty('id');
+		const checkIfTeacherIsFavorited = await fakeFavoritedTeachersRepository.findAllByUserId(
+			user.id,
+		);
+
+		expect(checkIfTeacherIsFavorited[0]).toBeTruthy();
 	});
 });

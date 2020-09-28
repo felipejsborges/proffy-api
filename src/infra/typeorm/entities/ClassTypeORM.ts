@@ -36,7 +36,7 @@ class ClassTypeORM implements Class {
 		classes_schedules => classes_schedules.class,
 		{
 			eager: true,
-			onDelete: 'SET NULL',
+			onDelete: 'CASCADE',
 			onUpdate: 'CASCADE',
 		},
 	)
