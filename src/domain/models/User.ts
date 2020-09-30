@@ -5,7 +5,7 @@ class User {
 	name: string;
 	email: string;
 	password: string;
-	avatar?: string;
+	avatar?: string | null;
 	whatsapp?: string;
 	bio?: string;
 

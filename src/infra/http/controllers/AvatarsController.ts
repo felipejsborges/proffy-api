@@ -4,6 +4,7 @@ import UpdateAvatarService from '../../../domain/services/Users/UpdateAvatarServ
 
 import UsersRepository from '../../../infra/typeorm/repositories/UsersRepository';
 import DiskStorageProvider from '../../../infra/providers/DiskStorageProvider';
+import DeleteAvatarService from '../../../domain/services/Users/DeleteAvatarService';
 
 class AvatarsController {
 	public async update(request: Request, response: Response): Promise<Response> {
@@ -17,9 +18,24 @@ class AvatarsController {
 		const user_id = request.user.id;
 		const fileName = request.fileName;
 
-		const avatarUrl = await updateAvatar.execute({ user_id, fileName });
+		const user = await updateAvatar.execute({ user_id, fileName });
 
-		return response.status(200).send(avatarUrl);
+		return response.status(200).json(user);
+	}
+
+	public async delete(request: Request, response: Response): Promise<Response> {
+		const usersRepository = new UsersRepository();
+		const diskStorageProvider = new DiskStorageProvider();
+		const deleteAvatar = new DeleteAvatarService(
+			usersRepository,
+			diskStorageProvider,
+		);
+
+		const user_id = request.user.id;
+
+		await deleteAvatar.execute({ user_id });
+
+		return response.status(204).send();
 	}
 }
 

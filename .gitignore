@@ -1,9 +1,6 @@
 node_modules
 coverage
 .env
-temp/*
-!temp/uploads
-temp/uploads/*
 package-lock.json
 yarn.lock
 yarn-error.log

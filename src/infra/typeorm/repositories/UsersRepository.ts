@@ -77,6 +77,20 @@ class UsersRepository implements iUsersRepository {
 
 		return updatedUser;
 	}
+
+	public async deleteAvatar(user_id: string): Promise<void> {
+		const user = await this.ormRepository.findOne(user_id);
+
+		if (!user) {
+			throw new AppError('User does not found');
+		}
+
+		user.avatar = null;
+
+		await this.ormRepository.save(user);
+
+		return;
+	}
 }
 
 export default UsersRepository;

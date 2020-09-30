@@ -1,41 +1,34 @@
-import User from '../../models/User';
 import iUsersRepository from '../../repositories/iUsersRepository';
 import AppError from '../../../shared/errors/AppError';
 import iStorageProvider from '../../providers/iStorageProvider';
 
 interface Request {
 	user_id: string;
-	fileName: string;
 }
 
-class UpdateAvatarService {
+class DeleteAvatarService {
 	constructor(
 		private usersRepository: iUsersRepository,
 		private storageProvider: iStorageProvider,
 	) {}
 
-	public async execute({ user_id, fileName }: Request): Promise<User> {
+	public async execute({ user_id }: Request): Promise<void> {
 		const user = await this.usersRepository.findOneById({ user_id });
 
 		if (!user) {
 			throw new AppError('User does not exist', 401);
 		}
 
-		if (user.avatar) {
-			await this.storageProvider.deleteFile(user.avatar);
+		if (!user.avatar) {
+			return;
 		}
 
-		const savedFileName = await this.storageProvider.saveFile(fileName);
+		await this.storageProvider.deleteFile(user.avatar);
 
-		user.avatar = savedFileName;
+		await this.usersRepository.deleteAvatar(user_id);
 
-		const updatedUser = await this.usersRepository.update({
-			user_id,
-			avatar: savedFileName,
-		});
-
-		return updatedUser;
+		return;
 	}
 }
 
-export default UpdateAvatarService;
+export default DeleteAvatarService;

@@ -3,12 +3,12 @@ import express from 'express';
 import ensureUserIsAuthenticated from '../middlewares/ensureUserIsAuthenticated';
 
 import createClassValidator from '../validators/classes/createClassValidator';
-import showClassValidator from '../validators/classes/showClassValidator';
 import queryParamsHandler from '../middlewares/queryParamsHandler';
 
 import ClassesController from '../controllers/ClassesController';
 import updateClassValidator from '../validators/classes/updateClassValidator';
 import deleteClassValidator from '../validators/classes/deleteClassValidator';
+import listClassesValidator from '../validators/classes/listClassesValidator';
 
 const classesRoutes = express.Router();
 
@@ -17,6 +17,7 @@ const classesController = new ClassesController();
 classesRoutes.get(
 	'/classes',
 	ensureUserIsAuthenticated,
+	listClassesValidator,
 	queryParamsHandler,
 	classesController.index,
 );

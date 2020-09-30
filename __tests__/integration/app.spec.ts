@@ -9,6 +9,7 @@ import Class from '../../src/domain/models/Class';
 
 import uploadsConfig from '../../src/shared/config/upload';
 import User from '../../src/domain/models/User';
+import AppError from '../../src/shared/errors/AppError';
 
 describe('AppIntegrationTests', () => {
 	let connection: Connection;
@@ -137,6 +138,14 @@ describe('AppIntegrationTests', () => {
 			expect(response.status).toBe(200);
 		});
 
+		it('should be able to delete avatar', async () => {
+			const response = await request(app)
+				.delete('/users/avatar')
+				.set('Authorization', `Bearer ${token}`);
+
+			expect(response.status).toBe(204);
+		});
+
 		it('should be send e-mail to recover password', async () => {
 			const response = await request(app)
 				.post('/password/recover')
@@ -232,6 +241,23 @@ describe('AppIntegrationTests', () => {
 							{ week_day: 6, from: '10:00', to: '18:00' },
 						],
 					});
+			});
+
+			it('should not be able to update a non-existing class', async () => {
+				const response = await request(app)
+					.put('/classes/non-existingClassId')
+					.set('Authorization', `Bearer ${token}`)
+					.send({ cost: 99, subject: 'updatedSubject' });
+
+				expect(response.status).toBe(400);
+			});
+
+			it('should not be able to delete a non-existing class', async () => {
+				const response = await request(app)
+					.delete('/classes/non-existingClassId')
+					.set('Authorization', `Bearer ${token}`);
+
+				expect(response.status).toBe(400);
 			});
 
 			it('should be able to list all classes, without apply filters', async () => {

@@ -22,7 +22,7 @@ class UsersController {
 			bio,
 		});
 
-		return response.status(201).send(user);
+		return response.status(201).json(user);
 	}
 
 	public async update(request: Request, response: Response): Promise<Response> {
@@ -52,7 +52,7 @@ class UsersController {
 			bio,
 		});
 
-		return response.status(200).send(user);
+		return response.status(200).json(user);
 	}
 
 	public async show(request: Request, response: Response): Promise<Response> {

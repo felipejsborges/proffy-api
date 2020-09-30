@@ -67,6 +67,18 @@ class UsersRepository implements iUsersRepository {
 
 		return userUpdated;
 	}
+
+	public async deleteAvatar(user_id: string): Promise<void> {
+		const index = this.users.findIndex(user => user.id === user_id);
+
+		if (index < 0) {
+			throw new AppError('User does not found', 401);
+		}
+
+		this.users[index].avatar = null;
+
+		return;
+	}
 }
 
 export default UsersRepository;

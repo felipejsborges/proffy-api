@@ -32,4 +32,5 @@ export default interface iUsersRepository {
 	findOneById(data: findOneUserByIdDTO): Promise<User | undefined>;
 	findOneByEmail(data: findOneUserByEmailDTO): Promise<User | undefined>;
 	update(data: updateUserDTO): Promise<User>;
+	deleteAvatar(user_id: string): Promise<void>;
 }

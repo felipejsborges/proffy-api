@@ -16,4 +16,10 @@ avatarRoutes.patch(
 	avatarsController.update,
 );
 
+avatarRoutes.delete(
+	'/users/avatar',
+	ensureUserIsAuthenticated,
+	avatarsController.delete,
+);
+
 export default avatarRoutes;
