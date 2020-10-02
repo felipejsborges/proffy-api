@@ -85,7 +85,7 @@ class UsersRepository implements iUsersRepository {
 			throw new AppError('User does not found');
 		}
 
-		user.avatar = null;
+		user.avatar = '';
 
 		await this.ormRepository.save(user);
 

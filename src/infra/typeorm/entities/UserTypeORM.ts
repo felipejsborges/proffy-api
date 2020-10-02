@@ -18,7 +18,7 @@ class UserTypeORM implements User {
 	@Column()
 	password: string;
 
-	@Column()
+	@Column({ nullable: true })
 	avatar?: string;
 
 	@Column()
