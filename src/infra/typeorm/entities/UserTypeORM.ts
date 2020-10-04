@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Exclude, Expose } from 'class-transformer';
 
 import ClassTypeORM from './ClassTypeORM';
 import User from '../../../domain/models/User';
@@ -16,6 +17,7 @@ class UserTypeORM implements User {
 	email: string;
 
 	@Column()
+	@Exclude()
 	password: string;
 
 	@Column({ nullable: true })
@@ -35,6 +37,13 @@ class UserTypeORM implements User {
 		favoritedTeacher => favoritedTeacher.teacher,
 	)
 	favoritedTeacher: FavoritedTeacherTypeORM[];
+
+	@Expose({ name: 'avatar_url' })
+	getAvatarUrl(): string | null {
+		return this.avatar
+			? `${process.env.APP_API_URL}/files/${this.avatar}`
+			: null;
+	}
 }
 
 export default UserTypeORM;

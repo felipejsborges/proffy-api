@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { classToClass } from 'class-transformer';
 
 import UpdateAvatarService from '../../../domain/services/Users/UpdateAvatarService';
 
@@ -20,7 +21,7 @@ class AvatarsController {
 
 		const user = await updateAvatar.execute({ user_id, fileName });
 
-		return response.status(200).json(user);
+		return response.status(200).json(classToClass(user));
 	}
 
 	public async delete(request: Request, response: Response): Promise<Response> {

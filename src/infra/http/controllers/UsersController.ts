@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { classToClass } from 'class-transformer';
 
 import CreateUserService from '../../../domain/services/Users/CreateUserService';
 import UpdateUserService from '../../../domain/services/Users/UpdateUserService';
@@ -22,7 +23,7 @@ class UsersController {
 			bio,
 		});
 
-		return response.status(201).json(user);
+		return response.status(201).json(classToClass(user));
 	}
 
 	public async update(request: Request, response: Response): Promise<Response> {
@@ -52,7 +53,7 @@ class UsersController {
 			bio,
 		});
 
-		return response.status(200).json(user);
+		return response.status(200).json(classToClass(user));
 	}
 
 	public async show(request: Request, response: Response): Promise<Response> {
