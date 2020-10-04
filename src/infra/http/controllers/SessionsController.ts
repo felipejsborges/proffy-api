@@ -1,3 +1,4 @@
+import { classToClass } from 'class-transformer';
 import { Request, Response } from 'express';
 
 import AuthenticateUserService from '../../../domain/services/Users/AuthenticateUserService';
@@ -20,7 +21,7 @@ class SessionsController {
 
 		const user = await authenticateUser.execute({ email, password });
 
-		return response.status(201).send(user);
+		return response.status(201).send(classToClass(user));
 	}
 }
 
