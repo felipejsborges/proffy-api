@@ -6,6 +6,7 @@ import UpdateClassService from '../../../domain/services/Classes/UpdateClassServ
 import DeleteClassService from '../../../domain/services/Classes/DeleteClassService';
 
 import ClassesRepository from '../../../infra/typeorm/repositories/ClassesRepository';
+import { classToClass } from 'class-transformer';
 
 class ClassesController {
 	public async index(request: Request, response: Response): Promise<Response> {
@@ -28,7 +29,7 @@ class ClassesController {
 			page,
 		});
 
-		return response.status(200).json(paginatedClasses);
+		return response.status(200).json(classToClass(paginatedClasses));
 	}
 
 	public async create(request: Request, response: Response): Promise<Response> {
@@ -44,7 +45,7 @@ class ClassesController {
 			cost,
 		});
 
-		return response.status(201).send(createdClass);
+		return response.status(201).send(classToClass(createdClass));
 	}
 
 	public async update(request: Request, response: Response): Promise<Response> {
@@ -64,7 +65,7 @@ class ClassesController {
 			cost,
 		});
 
-		return response.status(200).json(updatedClass);
+		return response.status(200).json(classToClass(updatedClass));
 	}
 
 	public async delete(request: Request, response: Response): Promise<Response> {

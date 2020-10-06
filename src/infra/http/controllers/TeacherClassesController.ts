@@ -1,3 +1,4 @@
+import { classToClass } from 'class-transformer';
 import { Request, Response } from 'express';
 
 import ShowTeacherClassesService from '../../../domain/services/Classes/ShowTeacherClassesService';
@@ -13,7 +14,7 @@ class TeacherClassesController {
 
 		const classes = await showTeacherClasses.execute({ teacher_id });
 
-		return response.status(200).json(classes);
+		return response.status(200).json(classToClass(classes));
 	}
 }
 

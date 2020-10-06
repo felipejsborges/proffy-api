@@ -64,7 +64,7 @@ class UsersController {
 
 		const user = await showUser.execute({ user_id });
 
-		return response.status(200).json(user);
+		return response.status(200).json(classToClass(user));
 	}
 }
 

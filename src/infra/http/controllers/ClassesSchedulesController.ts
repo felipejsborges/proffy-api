@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 import ClassesSchedulesRepository from '../../../infra/typeorm/repositories/ClassesSchedulesRepository';
 import CreateClassSchedulesService from '../../../domain/services/ClassesSchedules/CreateClassSchedulesService';
+import { classToClass } from 'class-transformer';
 
 class ClassesSchedulesController {
 	public async create(request: Request, response: Response): Promise<Response> {
@@ -13,12 +14,12 @@ class ClassesSchedulesController {
 		const { class_id } = request.params;
 		const { classSchedules } = request.body;
 
-		const createdClass = await createClassSchedules.execute({
+		const createdClassSchedules = await createClassSchedules.execute({
 			class_id,
 			classSchedules,
 		});
 
-		return response.status(201).send(createdClass);
+		return response.status(201).send(classToClass(createdClassSchedules));
 	}
 }
 
