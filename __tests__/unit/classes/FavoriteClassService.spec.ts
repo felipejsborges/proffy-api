@@ -1,28 +1,32 @@
 import faker from 'faker';
 
-import FavoriteTeacherService from '../../../src/domain/services/Users/FavoriteTeacherService';
-import FakeFavoritedTeachersRepository from '../../../src/domain/repositories/fakes/FakeFavoritedTeachersRepository';
+import FavoriteClassService from '../../../src/domain/services/Classes/FavoriteClassService';
+import FakeFavoritedClassesRepository from '../../../src/domain/repositories/fakes/FakeFavoritedClassesRepository';
 
 import FakeUsersRepository from '../../../src/domain/repositories/fakes/FakeUsersRepository';
+import FakeClassesRepository from '../../../src/domain/repositories/fakes/FakeClassesRepository';
 
 import User from '../../../src/domain/models/User';
+import Class from '../../../src/domain/models/Class';
 
 describe('FavoriteTeacher', () => {
-	let fakeFavoritedTeachersRepository: FakeFavoritedTeachersRepository;
-	let favoriteTeacher: FavoriteTeacherService;
+	let fakeFavoritedClassesRepository: FakeFavoritedClassesRepository;
+	let favoriteClass: FavoriteClassService;
 
 	let fakeUsersRepository: FakeUsersRepository;
+	let fakeClassesRepository: FakeClassesRepository;
 
 	let user: User;
 	let teacher: User;
 
+	let classItem: Class;
+
 	beforeEach(async () => {
-		fakeFavoritedTeachersRepository = new FakeFavoritedTeachersRepository();
-		favoriteTeacher = new FavoriteTeacherService(
-			fakeFavoritedTeachersRepository,
-		);
+		fakeFavoritedClassesRepository = new FakeFavoritedClassesRepository();
+		favoriteClass = new FavoriteClassService(fakeFavoritedClassesRepository);
 
 		fakeUsersRepository = new FakeUsersRepository();
+		fakeClassesRepository = new FakeClassesRepository();
 
 		const name1 = faker.name.findName();
 		const email1 = faker.internet.email();
@@ -43,15 +47,21 @@ describe('FavoriteTeacher', () => {
 			email: email2,
 			password: password2,
 		});
+
+		classItem = await fakeClassesRepository.create({
+			cost: 50,
+			subject: 'any-Subject',
+			user_id: teacher.id,
+		});
 	});
 
 	it('should be able to favorite a teacher', async () => {
-		await favoriteTeacher.execute({
+		await favoriteClass.execute({
 			user_id: user.id,
-			teacher_id: teacher.id,
+			class_id: classItem.id,
 		});
 
-		const checkIfTeacherIsFavorited = await fakeFavoritedTeachersRepository.findAllByUserId(
+		const checkIfTeacherIsFavorited = await fakeFavoritedClassesRepository.findAllByUserId(
 			user.id,
 		);
 

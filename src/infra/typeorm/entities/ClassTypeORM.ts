@@ -10,6 +10,7 @@ import UserTypeORM from './UserTypeORM';
 
 import ClassScheduleTypeORM from './ClassScheduleTypeORM';
 import Class from '../../../domain/models/Class';
+import FavoritedClassTypeORM from './FavoritedClassTypeORM';
 
 @Entity('classes')
 class ClassTypeORM implements Class {
@@ -41,6 +42,12 @@ class ClassTypeORM implements Class {
 		},
 	)
 	classes_schedules?: ClassScheduleTypeORM[];
+
+	@OneToMany(
+		() => FavoritedClassTypeORM,
+		favoritedClass => favoritedClass.class,
+	)
+	favoritedClass: FavoritedClassTypeORM;
 }
 
 export default ClassTypeORM;

@@ -1,28 +1,31 @@
 import faker from 'faker';
 
-import ShowUserFavoriteTeachersService from '../../../src/domain/services/Users/ShowUserFavoriteTeachersService';
-import FakeFavoritedTeachersRepository from '../../../src/domain/repositories/fakes/FakeFavoritedTeachersRepository';
+import ShowUserFavoriteClassesService from '../../../src/domain/services/Users/ShowUserFavoriteClassesService';
+import FakeFavoritedClassesRepository from '../../../src/domain/repositories/fakes/FakeFavoritedClassesRepository';
 
 import FakeUsersRepository from '../../../src/domain/repositories/fakes/FakeUsersRepository';
+import FakeClassesRepository from '../../../src/domain/repositories/fakes/FakeClassesRepository';
 
 import User from '../../../src/domain/models/User';
 
-describe('ShowUserFavoriteTeachers', () => {
-	let fakeFavoritedTeachersRepository: FakeFavoritedTeachersRepository;
-	let showUserFavoriteTeachers: ShowUserFavoriteTeachersService;
+describe('ShowUserFavoritedClasses', () => {
+	let fakeFavoritedClassesRepository: FakeFavoritedClassesRepository;
+	let showUserFavoritedClasses: ShowUserFavoriteClassesService;
 
 	let fakeUsersRepository: FakeUsersRepository;
+	let fakeClassesRepository: FakeClassesRepository;
 
 	let user: User;
 	let teacher: User;
 
 	beforeEach(async () => {
-		fakeFavoritedTeachersRepository = new FakeFavoritedTeachersRepository();
-		showUserFavoriteTeachers = new ShowUserFavoriteTeachersService(
-			fakeFavoritedTeachersRepository,
+		fakeFavoritedClassesRepository = new FakeFavoritedClassesRepository();
+		showUserFavoritedClasses = new ShowUserFavoriteClassesService(
+			fakeFavoritedClassesRepository,
 		);
 
 		fakeUsersRepository = new FakeUsersRepository();
+		fakeClassesRepository = new FakeClassesRepository();
 
 		const name1 = faker.name.findName();
 		const email1 = faker.internet.email();
@@ -44,23 +47,29 @@ describe('ShowUserFavoriteTeachers', () => {
 			password: password2,
 		});
 
-		await fakeFavoritedTeachersRepository.save({
+		const createdClass = await fakeClassesRepository.create({
+			user_id: teacher.id,
+			subject: 'any',
+			cost: 50,
+		});
+
+		await fakeFavoritedClassesRepository.save({
 			user_id: user.id,
-			teacher_id: teacher.id,
+			class_id: createdClass.id,
 		});
 	});
 
 	it('should be able to list favorite teachers of a specific user', async () => {
 		const findAllByUserId = jest.spyOn(
-			fakeFavoritedTeachersRepository,
+			fakeFavoritedClassesRepository,
 			'findAllByUserId',
 		);
 
-		const favoriteTeachers = await showUserFavoriteTeachers.execute({
+		const favoritedClasses = await showUserFavoritedClasses.execute({
 			user_id: user.id,
 		});
 
-		expect(favoriteTeachers).toHaveLength(1);
+		expect(favoritedClasses).toHaveLength(1);
 		expect(findAllByUserId).toHaveBeenCalledWith(user.id);
 	});
 });

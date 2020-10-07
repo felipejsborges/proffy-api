@@ -3,7 +3,6 @@ import { Exclude, Expose } from 'class-transformer';
 
 import ClassTypeORM from './ClassTypeORM';
 import User from '../../../domain/models/User';
-import FavoritedTeacherTypeORM from './FavoritedTeacherTypeORM';
 
 @Entity('users')
 class UserTypeORM implements User {
@@ -31,12 +30,6 @@ class UserTypeORM implements User {
 
 	@OneToMany(() => ClassTypeORM, classItem => classItem.user)
 	class: ClassTypeORM;
-
-	@OneToMany(
-		() => FavoritedTeacherTypeORM,
-		favoritedTeacher => favoritedTeacher.teacher,
-	)
-	favoritedTeacher: FavoritedTeacherTypeORM[];
 
 	@Expose({ name: 'avatar_url' })
 	getAvatarUrl(): string | null {

@@ -27,6 +27,7 @@ describe('AppIntegrationTests', () => {
 		connection = await createConnection();
 
 		await connection.query('DROP TABLE IF EXISTS favorited_teachers');
+		await connection.query('DROP TABLE IF EXISTS favorited_classes');
 		await connection.query('DROP TABLE IF EXISTS classes_schedules');
 		await connection.query('DROP TABLE IF EXISTS classes');
 		await connection.query('DROP TABLE IF EXISTS connections');
@@ -37,7 +38,7 @@ describe('AppIntegrationTests', () => {
 	});
 
 	beforeEach(async () => {
-		await connection.query('DELETE FROM favorited_teachers');
+		await connection.query('DELETE FROM favorited_classes');
 		await connection.query('DELETE FROM classes_schedules');
 		await connection.query('DELETE FROM classes');
 		await connection.query('DELETE FROM connections');
@@ -374,24 +375,36 @@ describe('AppIntegrationTests', () => {
 	});
 
 	describe('Favorites', () => {
+		let classItem: Class;
+
 		beforeEach(async () => {
+			const createClassResponse = await request(app)
+				.post('/classes')
+				.send({
+					subject: 'any',
+					cost: 50,
+				})
+				.set('Authorization', `Bearer ${token}`);
+
+			classItem = createClassResponse.body;
+
 			await request(app)
-				.post(`/favorite-teachers/${user2.id}`)
+				.post(`/favorite-classes/${classItem.id}`)
 				.set('Authorization', `Bearer ${token}`);
 		});
 
-		it('should be able to list all favorited teachers of a user', async () => {
+		it('should be able to list all favorited classes of a user', async () => {
 			const response = await request(app)
-				.get(`/favorite-teachers`)
+				.get(`/favorite-classes`)
 				.set('Authorization', `Bearer ${token}`);
 
 			expect(response.status).toBe(200);
-			expect(response.body[0].teacher_id).toBe(user2.id);
+			expect(response.body[0].class_id).toBe(classItem.id);
 		});
 
 		it('should be able remove a teacher from favorites', async () => {
 			const response = await request(app)
-				.delete(`/favorite-teachers/${user2.id}`)
+				.delete(`/favorite-classes/${classItem.id}`)
 				.set('Authorization', `Bearer ${token}`);
 
 			expect(response.status).toBe(204);
