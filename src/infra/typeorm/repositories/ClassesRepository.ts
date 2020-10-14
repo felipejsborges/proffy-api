@@ -23,7 +23,7 @@ class ClassesRepository implements iClassesRepository {
 		subject,
 		time,
 		skip = 0,
-		limit = 10,
+		limit = 999,
 	}: findClassesDTO): Promise<findAllResults> {
 		const [classes, total] = await this.ormRepository.findAndCount({
 			join: {

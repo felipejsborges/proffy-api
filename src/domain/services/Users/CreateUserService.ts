@@ -31,7 +31,7 @@ class CreateUserService {
 
 		return await this.usersRepository.create({
 			name,
-			email,
+			email: email.toLowerCase(),
 			password: await hash(password, 8),
 			avatar,
 			whatsapp,
