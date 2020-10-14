@@ -8,7 +8,7 @@ export default function queryParamsHandler(
 ): void {
 	const page = request.query.page ? Number(request.query.page) : 1;
 
-	const limit = request.query.limit ? Number(request.query.limit) : 10;
+	const limit = request.query.limit ? Number(request.query.limit) : 999;
 
 	const week_day = request.query.week_day
 		? Number(request.query.week_day)

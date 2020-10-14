@@ -57,7 +57,7 @@ class ListClassesService {
 		const { total, classes } = await this.classesRepository.findAll(params);
 
 		skip = skip ? skip : 0;
-		limit = limit ? limit : 10;
+		limit = limit ? limit : 999;
 
 		const totalClassesInPage = classes.length;
 		const totalClassesFound = total;
