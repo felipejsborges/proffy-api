@@ -128,7 +128,7 @@ describe('AppIntegrationTests', () => {
 			expect(response.body.bio).toBe(updatedBio);
 		});
 
-		it('should be able to update avatar', async () => {
+		it.skip('should be able to update avatar', async () => {
 			const filePath = path.resolve(__dirname, '..', 'utils', 'profile.jpeg');
 
 			const response = await request(app)
@@ -147,7 +147,7 @@ describe('AppIntegrationTests', () => {
 			expect(response.status).toBe(204);
 		});
 
-		it('should be send e-mail to recover password', async () => {
+		it.skip('should be send e-mail to recover password', async () => {
 			const response = await request(app)
 				.post('/password/recover')
 				.send({ email });

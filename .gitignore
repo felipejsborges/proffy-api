@@ -5,6 +5,7 @@ package-lock.json
 yarn.lock
 yarn-error.log
 .vscode
+dist
 
 temp/*.jpeg
 temp/*.jpg
